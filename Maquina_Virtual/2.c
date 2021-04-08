@@ -5,7 +5,7 @@
 
 int segundo()
 {
-
+//ERASE UNA VEZ
     char linea[256], *token;
     FILE *arch;
     arch = fopen("prueba.txt","rt");
