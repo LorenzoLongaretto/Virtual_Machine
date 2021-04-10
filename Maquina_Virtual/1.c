@@ -2,7 +2,7 @@
 #include<string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+/*
 int primero()
 {
 
@@ -19,3 +19,4 @@ int primero()
     return 0;
 }
 
+*/

@@ -1,6 +1,4 @@
-<<<<<<< Updated upstream
 #include "1.h"
-=======
 #include <stdio.h>
 #include <stdlib.h>
 #include "instrucciones.h"
@@ -58,4 +56,3 @@ strcpy(vec[15],"FX");
 
 
 
->>>>>>> Stashed changes

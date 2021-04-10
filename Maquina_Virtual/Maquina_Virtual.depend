@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1617913875 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\1.c
+1618090257 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\1.c
 	"1.h"
 	<string.h>
 	<stdio.h>
@@ -7,19 +7,23 @@
 
 1617913353 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\1.h
 
-1618010931 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.c
+1618092521 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	"traductor.h"
 
-1618025898 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\main.c
+1618092432 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	"traductor.h"
 
-1618011199 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\instrucciones.c
+1618087521 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\instrucciones.c
+	"1.h"
 	<stdio.h>
 	<stdlib.h>
+	"instrucciones.h"
 	<string.h>
 	<stdio.h>
 	<stdlib.h>
@@ -55,4 +59,8 @@
 1618084842 c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.h
 
 1618085815 c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.h
+
+1618092521 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.h
+
+1618087531 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\instrucciones.h
 
