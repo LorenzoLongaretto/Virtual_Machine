@@ -3,7 +3,6 @@
 #include <string.h>
 
 
-
 int valid_line(char *line){
 
 
@@ -23,10 +22,10 @@ void load_register(){
     arch=fopen(filename,"rt");
     if(arch!=NULL)
     {
-        while(fscanf(arch,"%s",auxline)==1){
-               strcpy(auxline,strtok(auxline,";"));
-               printf("%s ", auxline);
-               printf("%s \n",only_label(auxline));
+        while(fgets(auxline,100,arch)!=NULL){
+            strcpy(auxline,strtok(auxline,";"));
+            printf("%s\n", auxline);
+            printf("%s\n",only_label(auxline));
         }
     }
 
