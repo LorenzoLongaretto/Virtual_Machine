@@ -15,6 +15,22 @@ char *only_label(char auxline[]){
 return strchr(auxline,":");
 }
 
+int filtranum(char auxline[]){
+int num,i,j=0;
+char straux[100];
+    for (i=0;i<strlen(auxline);i++)
+        if (auxline[i]>='0' && auxline[i]<='9'){
+            straux[j]=auxline[i];
+            straux[j+1]="\0";
+            j++;
+        }
+    if (straux[0]!='\0')
+        return atoi(straux); //pasa string a decimal
+    else
+        return -1;
+}
+
+
 void load_register(){
     FILE *arch;
     int i=0;
@@ -24,9 +40,11 @@ void load_register(){
     {
         while(fgets(auxline,100,arch)!=NULL){
             strcpy(auxline,strtok(auxline,";"));
-            printf("%s\n", auxline);
-            printf("%s\n",only_label(auxline));
+            printf("%s", auxline);
+            //printf("%s\n",only_label(auxline));
+            printf("%d \n",filtranum(auxline));
         }
+        //printf("%d ",filtranum);
     }
 
 
