@@ -35,13 +35,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="1.h" />
-		<Unit filename="2.c">
+		<Unit filename="instrucciones.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="instrucciones.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="prueba.txt" />
+		<Unit filename="traductor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="traductor.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
