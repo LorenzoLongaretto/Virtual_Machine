@@ -11,8 +11,8 @@ void load_register(char v_mnemonics[]){
     arch=fopen(filename,"rt");
     if(arch!=NULL){
         while(fgets(auxline,100,arch)!=NULL){
-            sscanf(auxline,"%s",firstword);
-            if(valid_line(firstword,v_mnemonics))
+            //sscanf(auxline,"%s",firstword);
+            if(valid_line(auxline,v_mnemonics))
             {
                 strcpy(auxline,strtok(auxline,";"));//Elimina los comenarios
 
