@@ -64,3 +64,36 @@
 
 1618093171 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\instrucciones.h
 
+1618152097 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\1.c
+	"1.h"
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+
+1618010772 c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\1.h
+
+1618152097 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\instrucciones.c
+	"1.h"
+	<stdio.h>
+	<stdlib.h>
+	"instrucciones.h"
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+
+1618152097 c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\instrucciones.h
+
+1618168138 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"traductor.h"
+
+1618152097 c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.h
+
+1618168568 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"traductor.h"
+

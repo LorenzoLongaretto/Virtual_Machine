@@ -91,3 +91,11 @@ char straux[100];
     else
         return -1;
 }
+
+int find_nmemonic(char *mnem,char v_mnemonics[24][5]){ //paso la linea completa y busca en el vector y devuelve la posicion
+int i=0;
+    while((strcmp(mnem,v_mnemonics[i]) != 0) && i<=23)
+        i++;
+
+        return (i<=23)? i:-1;
+}
