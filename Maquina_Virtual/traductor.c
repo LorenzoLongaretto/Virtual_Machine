@@ -11,7 +11,7 @@ void create_mnemonics(char v_mnemonics[24][5]){
     strcpy(v_mnemonics[3],"SWAP");
     strcpy(v_mnemonics[4],"MUL");
     strcpy(v_mnemonics[5],"DIV");
-    strcpy(v_mnemonics[6],"MOD");
+    strcpy(v_mnemonics[6],"CMP");
     strcpy(v_mnemonics[7],"SHL");
     strcpy(v_mnemonics[8],"SHR");
     strcpy(v_mnemonics[9],"AND");
@@ -25,10 +25,11 @@ void create_mnemonics(char v_mnemonics[24][5]){
     strcpy(v_mnemonics[17],"JNZ");
     strcpy(v_mnemonics[18],"JNP");
     strcpy(v_mnemonics[19],"JNN");
-    strcpy(v_mnemonics[20],"LDH");
-    strcpy(v_mnemonics[21],"RND");
-    strcpy(v_mnemonics[22],"NOT");
-    strcpy(v_mnemonics[23],"STOP");
+    strcpy(v_mnemonics[20],"LDL");
+    strcpy(v_mnemonics[21],"LDH");
+    strcpy(v_mnemonics[22],"RND");
+    strcpy(v_mnemonics[23],"NOT");
+    strcpy(v_mnemonics[24],"STOP");
 }
 
 int is_mnemonic(char string[], char v_mnemonics[24][5]){

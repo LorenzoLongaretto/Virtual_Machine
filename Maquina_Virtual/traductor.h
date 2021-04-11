@@ -1,3 +1,9 @@
+struct nodo{
+    char label[];
+    int pos;
+    nodo *sig;
+}nodo;
+typedef nodo* TLista;
 
 void create_mnemonics(char v_mnemonics[24][5]);
 
