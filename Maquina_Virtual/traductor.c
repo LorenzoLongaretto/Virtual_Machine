@@ -3,7 +3,7 @@
 #include <string.h>
 #include "traductor.h"
 
-void create_mnemonics(char v_mnemonics[][5]){
+void create_mnemonics(char v_mnemonics[24][5]){
     strcpy(v_mnemonics[0],"MOV");
     strcpy(v_mnemonics[1],"ADD");
     strcpy(v_mnemonics[2],"SUB");
@@ -30,7 +30,7 @@ void create_mnemonics(char v_mnemonics[][5]){
     strcpy(v_mnemonics[23],"STOP");
 }
 
-int is_mnemonic(char string[], char v_mnemonics[]){
+int is_mnemonic(char string[], char v_mnemonics[24][5]){
     int i=0;
     while((strcmp(string,v_mnemonics[i]) != 0) && i<=23)
         i++;
@@ -41,9 +41,10 @@ int is_label(char string[]){
     return (string[strlen(string)-1]==':');
 }
 
-int valid_line(char string[], char v_mnemonics[]){
-    return (!isspace(string[0]) && (is_label(string) || is_mnemonic(toupper(string),v_mnemonics)));// la mayus
+int valid_line(char string[], char v_mnemonics[24][5]){
+    return (!isspace(string[0]) && (is_label(string) || is_mnemonic(toupper(string),v_mnemonics)));// TOUPPER NO FUNCA, SI PONEN TODO EN MAYUS EN EL ARCH DEBERIA FUNCAR
 }
+
 
 void clean_comments(){
 
