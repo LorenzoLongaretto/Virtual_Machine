@@ -36,7 +36,9 @@ int is_mnemonic(char string[], char v_mnemonics[24][5]){
         i++;
     return(i<=23);
 }
-
+int operandos(char string[]){
+    return (string[strlen(string)-1]==',');
+}
 int is_label(char string[]){
     return (string[strlen(string)-1]==':');
 }
