@@ -49,15 +49,15 @@ int valid_line(char string[], char v_mnemonics[24][5]){
 }
 *///nota: esta funcion es mejor que la de arriba ya que contempla mas casos pero no funca el toupper(estoy re quemado)
 int valid_line(char string[], char v_mnemonics[24][5]){    // string[] es la cadena completa de la linea del archivo
-char aux[50];
+char aux[10];
 sscanf(string,"%s",aux);//leo el primer string de toda la cadena
     if (!isspace(aux[0])){ //si no es espacio laburo
          if (is_label(aux)){ //si es rotulo avanzo la lectura y veo si es instrucion
-            sscanf(string,"%s",aux);
-            return is_mnemonic(toupper(string),v_mnemonics); //toupper no funca SI TENEMOS QUE HACER UN VOID PARA
+            sscanf(string,"%s %s",aux,aux);
+            return is_mnemonic(strupr(aux),v_mnemonics); //toupper no funca SI TENEMOS QUE HACER UN VOID PARA
          }                                                      //HACER MAYUS LA CADENA HAY QUE PASAR ESTA FUNCION A VOID
          else //si no es rotulo puede ser instruccion
-            return is_mnemonic(toupper(string),v_mnemonics); //puedo sacar factor comun esta linea
+            return is_mnemonic(strupr(aux),v_mnemonics); //puedo sacar factor comun esta linea
     }
     else
         return 0;
