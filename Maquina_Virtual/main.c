@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "traductor.h"
+#include<ctype.h>
 
 
 void load_register(char v_mnemonics[]){
     FILE *arch;
-    int lineaActual=0;
+    int lineaActual=0,pos;
     char *filename="prueba.txt",auxline[100], finalLine[100],firstword[100],*mnem;//finalLine es la linea sin rotulo ni comentarios
     arch=fopen(filename,"rt");
     if(arch!=NULL){
@@ -20,6 +21,8 @@ void load_register(char v_mnemonics[]){
                     strcpy(auxline,only_label(auxline));
                     printf("%s\n", auxline);
                    mnem = strtok(auxline," ");
+                   pos = find_nmemonic(mnem,v_mnemonics);
+
 
 
 

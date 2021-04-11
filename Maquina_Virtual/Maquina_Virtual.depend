@@ -83,7 +83,7 @@
 
 1618152097 c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\instrucciones.h
 
-1618168138 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.c
+1618168580 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

@@ -11,3 +11,4 @@ void clean_comments();
 char *only_label(char string[]);
 
 int filter_num(char auxline[]);
+int find_nmemonic(char *mnem,char v_mnemonics[24][5]);

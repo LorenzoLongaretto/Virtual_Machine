@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "traductor.h"
+#include<ctype.h>
 
 void create_mnemonics(char v_mnemonics[24][5]){
     strcpy(v_mnemonics[0],"MOV");
