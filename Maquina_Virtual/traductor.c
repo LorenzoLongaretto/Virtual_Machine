@@ -5,7 +5,7 @@
 #include<ctype.h>
 
 void create_mnemonics(char v_mnemonics[24][5]){
-    strcpy(v_mnemonics[0],"MOV");
+    strcpy(v_mnemonics[0],"MOV");//2 operandos
     strcpy(v_mnemonics[1],"ADD");
     strcpy(v_mnemonics[2],"SUB");
     strcpy(v_mnemonics[3],"SWAP");
@@ -17,7 +17,7 @@ void create_mnemonics(char v_mnemonics[24][5]){
     strcpy(v_mnemonics[9],"AND");
     strcpy(v_mnemonics[10],"OR");
     strcpy(v_mnemonics[11],"XOR");
-    strcpy(v_mnemonics[12],"SYS");
+    strcpy(v_mnemonics[12],"SYS");//1 operando
     strcpy(v_mnemonics[13],"JMP");
     strcpy(v_mnemonics[14],"JZ");
     strcpy(v_mnemonics[15],"JP");
@@ -29,7 +29,7 @@ void create_mnemonics(char v_mnemonics[24][5]){
     strcpy(v_mnemonics[21],"LDH");
     strcpy(v_mnemonics[22],"RND");
     strcpy(v_mnemonics[23],"NOT");
-    strcpy(v_mnemonics[24],"STOP");
+    strcpy(v_mnemonics[24],"STOP");//0 operando
 }
 
 int is_mnemonic(char string[], char v_mnemonics[24][5]){
@@ -44,11 +44,8 @@ int operandos(char string[]){
 int is_label(char string[]){
     return (string[strlen(string)-1]==':');
 }
-/* no verifica si el label esta bien pero la instruccion no
-int valid_line(char string[], char v_mnemonics[24][5]){
-    return (!isspace(string[0]) && (is_label(string) || is_mnemonic(toupper(string),v_mnemonics)));// TOUPPER NO FUNCA, SI PONEN TODO EN MAYUS EN EL ARCH DEBERIA FUNCAR
-}
-*///nota: esta funcion es mejor que la de arriba ya que contempla mas casos pero no funca el toupper(estoy re quemado)
+
+
 int valid_line(char string[], char v_mnemonics[24][5]){    // string[] es la cadena completa de la linea del archivo
 char aux[10];
 sscanf(string,"%s",aux);//leo el primer string de toda la cadena
@@ -64,12 +61,6 @@ sscanf(string,"%s",aux);//leo el primer string de toda la cadena
         return 0;
 }
 
-
-
-void clean_comments(){
-
-}
-
 char *only_label(char string[]){
     char ch = ':', *ret;
     ret = strchr(string,ch);
@@ -80,7 +71,7 @@ char *only_label(char string[]){
     else
       return NULL;
 }
-
+/*
 int filter_num(char auxline[]){//Filtra los numeros dada una cadena
 int num,i,j=0;
 char straux[100];
@@ -95,7 +86,7 @@ char straux[100];
     else
         return -1;
 }
-
+*/
 int find_nmemonic(char *mnem,char v_mnemonics[24][5]){ //paso la linea completa y busca en el vector y devuelve la posicion
 int i=0;
     while((strcmp(mnem,v_mnemonics[i]) != 0) && i<=23)
@@ -103,3 +94,37 @@ int i=0;
 
         return (i<=23)? i:-1;
 }
+
+void opereitor(char mnem[],char ARG[],char *,int *codigo, int *,char v_mnemonics[24][5]){
+
+if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%'){// INMEDIATO
+
+}
+else{
+    if (isalpha(ARG[0])){//REGISTRO
+
+    }
+    else{
+        if (ARG[0]=='['){ // DIRECTO
+        switch (ARG_A[1]){
+        case ('#' || isdigit(ARG[1])):
+            //decimal
+            break;
+        case '@':
+            //octal
+            break;
+        case '%'
+            //hexa
+            break;
+        default:
+            //caracter
+        }
+        }
+
+    }
+
+}
+}
+
+
+

@@ -9,51 +9,37 @@
 void load_register(char v_mnemonics[]){
     FILE *arch;
     int lineaActual=0,pos;
-    char *filename="prueba.txt",*auxline, finalLine[100],firstword[100],label[10];//finalLine es la linea sin rotulo ni comentarios
+    char *filename="prueba.txt",auxline[100], finalLine[100],firstword[100],mnem[50],label[10],A[10],B[10],C[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t lineBinary;
     arch=fopen(filename,"rt");
     if(arch!=NULL){
         while(fgets(auxline,100,arch)!=NULL){
             sscanf(auxline,"%s",firstword);
-            if(valid_line(auxline,v_mnemonics))
-            {
+            if(valid_line(auxline,v_mnemonics)){
                 strcpy(auxline,strtok(auxline,";"));//Elimina los comenarios
 
-                if(only_label(auxline) != NULL){    //Elimina los rotulos, revisar doble llamado, problema:only label devuelve char o NULL
-                        sscanf(auxline,"%s",label); //Guarda el rotulo
+                if(only_label(auxline) != NULL){   //Elimina los rotulos, revisar doble llamado, problema:only label devuelve char o NULL
+                        sscanf(auxline,"%s",label);//Guarda label
                         //listLabels(*l_labels,label);
-                        strcpy(auxline,only_label(auxline)); //Elimina rotulo
+                        strcpy(auxline,only_label(auxline));//Elimina rotulo
                 }
-                strcpy(finalLine,auxline); // copio la linea completa en finalLine para no perderla
-                printf("%s\n", finalLine);
-                auxline = strtok(auxline," ");
-                pos = find_nmemonic(strupr(auxline),v_mnemonics);  // primero analizo el mnemonico
-
-                if(pos==-1){ //error, no encuentra mnemonico
-                    //lineBinary = ;
-                }else{
-                    //lineBinary = ;
-                }
-
-                 while(auxline!=NULL){   // analizo los otros terminos recorriendo
-
-                      if(auxline[0] =='['){ // es directo
-
-
-                      }
-
-
-                    auxline = strtok(NULL," ");
-               }
-                //printf("%d \n",filtranum(auxline));
-
-
+                strcpy(C,"NULL");
+                sscanf(auxline,"%s %s %s",A,B,C);
+                strupr(A);strupr(B);strupr(C);
+                //printf("%s\n", auxline);
+                printf("%s %s %s \n",A,B,C);
                 lineaActual++;
-            }else{
-                //lineBinary = ;        //error, no es una linea valida
+            }
+            else{
+                //HACER BANDERA (llamar a belgrano, by pablito)
+                //aca va el error de syntax,
+                //Ante alguno de estos errores la traducción deberá continuar,
+                //pero no se generará el archivo Programa
+                //Código Máquina.
+
             }
             //printf("%d", lineaActual); Indica el nro de linea, solo tiene en cuenta las lineas validas
-            //printf("%d ",filtranum);
+
         }
 
     }

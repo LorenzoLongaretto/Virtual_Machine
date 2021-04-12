@@ -1,9 +1,9 @@
-typedef struct nodo{
-    char label[50];
+/*typedef struct nodo{
+    char label[];
     int pos;
-    struct nodo *sig;
+     struct nodo *sig;
 }nodo;
-typedef nodo* TLista;
+typedef nodo* TLista;*/
 
 void create_mnemonics(char v_mnemonics[24][5]);
 
