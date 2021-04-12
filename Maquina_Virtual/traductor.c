@@ -34,9 +34,9 @@ void create_mnemonics(char v_mnemonics[24][5]){
 
 int is_mnemonic(char string[], char v_mnemonics[24][5]){
     int i=0;
-    while((strcmp(string,v_mnemonics[i]) != 0) && i<=23)
+    while((strcmp(string,v_mnemonics[i]) != 0) && i<=24)
         i++;
-    return(i<=23);
+    return(i<=24);
 }
 int operandos(char string[]){
     return (string[strlen(string)-1]==',');
@@ -94,7 +94,7 @@ int i=0;
 
         return (i<=23)? i:-1;
 }
-
+/*
 void opereitor(char mnem[],char ARG[],char *,int *codigo, int *,char v_mnemonics[24][5]){
 
 if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%'){// INMEDIATO
@@ -124,7 +124,7 @@ else{
     }
 
 }
-}
+}*/
 
 
 

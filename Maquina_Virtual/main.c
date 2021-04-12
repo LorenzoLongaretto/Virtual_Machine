@@ -31,6 +31,7 @@ void load_register(char v_mnemonics[]){
                 lineaActual++;
             }
             else{
+                printf("linea no valida");
                 //HACER BANDERA (llamar a belgrano, by pablito)
                 //aca va el error de syntax,
                 //Ante alguno de estos errores la traducción deberá continuar,
@@ -50,6 +51,8 @@ void load_register(char v_mnemonics[]){
 
 int main(int argc, char *argv[])
 {
+    int32_t memoria[4096];
+    int DS=0; //DATA SEGMENT
     char v_mnemonics[24][5];
     create_mnemonics(v_mnemonics);
     load_register(v_mnemonics);
