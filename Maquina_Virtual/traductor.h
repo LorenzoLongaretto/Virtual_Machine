@@ -1,7 +1,7 @@
-struct nodo{
-    char label[];
+typedef struct nodo{
+    char label[50];
     int pos;
-    nodo *sig;
+    struct nodo *sig;
 }nodo;
 typedef nodo* TLista;
 

@@ -9,7 +9,7 @@
 void load_register(char v_mnemonics[]){
     FILE *arch;
     int lineaActual=0,pos;
-    char *filename="prueba.txt",auxline[100], finalLine[100],firstword[100],mnem[50],label[10];//finalLine es la linea sin rotulo ni comentarios
+    char *filename="prueba.txt",*auxline, finalLine[100],firstword[100],label[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t lineBinary;
     arch=fopen(filename,"rt");
     if(arch!=NULL){
@@ -19,30 +19,38 @@ void load_register(char v_mnemonics[]){
             {
                 strcpy(auxline,strtok(auxline,";"));//Elimina los comenarios
 
-                if(only_label(auxline) != NULL){   //Elimina los rotulos, revisar doble llamado, problema:only label devuelve char o NULL
-                        sscanf(auxline,"%s",label);//Guarda label
+                if(only_label(auxline) != NULL){    //Elimina los rotulos, revisar doble llamado, problema:only label devuelve char o NULL
+                        sscanf(auxline,"%s",label); //Guarda el rotulo
                         //listLabels(*l_labels,label);
-                        strcpy(auxline,only_label(auxline));//Elimina rotulo
+                        strcpy(auxline,only_label(auxline)); //Elimina rotulo
                 }
-                printf("%s\n", auxline);
-                srtcpy(mnem,auxline);
-                mnem = strtok(mnem," ");
-                pos = find_nmemonic(strupr(mnem),v_mnemonics);
+                strcpy(finalLine,auxline); // copio la linea completa en finalLine para no perderla
+                printf("%s\n", finalLine);
+                auxline = strtok(auxline," ");
+                pos = find_nmemonic(strupr(auxline),v_mnemonics);  // primero analizo el mnemonico
+
                 if(pos==-1){ //error, no encuentra mnemonico
-                    lineBinary = ;
+                    //lineBinary = ;
                 }else{
-                    lineBinary = ;
+                    //lineBinary = ;
                 }
 
+                 while(auxline!=NULL){   // analizo los otros terminos recorriendo
 
+                      if(auxline[0] =='['){ // es directo
+
+
+                      }
+
+
+                    auxline = strtok(NULL," ");
+               }
                 //printf("%d \n",filtranum(auxline));
-               // find_nmemonic() encuentra el nemonico y en caso de que no exista establece error
-
 
 
                 lineaActual++;
             }else{
-                lineBinary = ;//error, no encuentra mnemonico
+                //lineBinary = ;        //error, no es una linea valida
             }
             //printf("%d", lineaActual); Indica el nro de linea, solo tiene en cuenta las lineas validas
             //printf("%d ",filtranum);
