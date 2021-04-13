@@ -94,8 +94,8 @@ int i=0;
 
         return (i<=23)? i:-1;
 }
-/*
-void opereitor(char mnem[],char ARG[],char *,int *codigo, int *,char v_mnemonics[24][5]){
+
+void opereitor(char ARG[],char *,int *codigo, int *){
 
 if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%'){// INMEDIATO
 
@@ -113,7 +113,7 @@ else{
         case '@':
             //octal
             break;
-        case '%'
+        case '%':
             //hexa
             break;
         default:
@@ -124,7 +124,7 @@ else{
     }
 
 }
-}*/
+}
 
 
 
