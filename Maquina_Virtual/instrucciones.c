@@ -53,6 +53,84 @@ strcpy(vec[14],"EX");
 strcpy(vec[15],"FX");
 }
 */
+<<<<<<< Updated upstream
+=======
+/*
+void MOV(int *arg1,int *arg2){ //MOV AX,BX son int de 32 creo
+
+    *arg1=*arg2;
+}
+
+void ADD(int *arg1, int *arg2){
+    *arg1+=*arg2;
+}
+
+void SUB(int *arg1, int *arg2){
+    *arg1-=*arg2;
+}
+
+void SWAP(int *arg1, int *arg2){
+int cambio;
+    cambio=*arg1;
+    *arg1=*arg2;
+    *arg2=cambio;
+}
+
+void MUL(int *arg1, int *arg2){
+
+    *arg1 *=*arg2;
+}
+
+void DIV(int *arg1, int *arg2){
+
+    *arg1 /=arg2;
+}
+
+void CMP(int *arg1, int *arg2){//FALTA
+
+}
+
+void SHL(int *arg1, int *arg2){
+
+    *arg1 <<=*arg2;
+}
+
+void SHR(int *arg1, int *arg2){
+
+    *arg1 >>=*arg2;
+}
+
+void AND(int *arg1, int *arg2){
+
+    *arg1 &=*arg2;
+}
+
+void OR(int *arg1, int *arg2){
+
+    *arg1 |=*arg2;
+}
+
+void XOR(int *arg1, int *arg2){
+
+    *arg1 ^=*arg2; //gracias google
+}
+
+void SYS(){
+
+}
+
+
+
+void NOT(int *arg1, int *arg2){ //paso arg2 al pedo
+
+    *arg1=-*arg1;
+}
+
+*/
+
+
+
+>>>>>>> Stashed changes
 
 
 

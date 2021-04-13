@@ -31,15 +31,16 @@
 	<stdio.h>
 	<stdlib.h>
 
-1618076124 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\1.c
+1618333637 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\1.c
 	"1.h"
 	<string.h>
 	<stdio.h>
 	<stdlib.h>
 
-1617921274 c:\users\robert\documents\github\virtual_machine\maquina_virtual\1.h
+1618269863 c:\users\robert\documents\github\virtual_machine\maquina_virtual\1.h
 
-1618085581 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.c
+1618337108 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.c
+	"1.h"
 	<stdio.h>
 	<stdlib.h>
 	"instrucciones.h"
@@ -47,11 +48,12 @@
 	<stdio.h>
 	<stdlib.h>
 
-1618085785 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.c
+1618337091 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"traductor.h"
+	<ctype.h>
 
 1618084578 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\main.c
 	<stdio.h>
@@ -59,9 +61,9 @@
 	<string.h>
 	"instrucciones.h"
 
-1618084842 c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.h
+1618333637 c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.h
 
-1618085815 c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.h
+1618333637 c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.h
 
 1618253717 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.h
 
