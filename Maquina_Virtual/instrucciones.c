@@ -3,16 +3,13 @@
 #include <stdlib.h>
 #include "instrucciones.h"
 
-/*
+
 //instrucciones nemonicas void mov()
 
 
->>>>>>> Stashed changes
-#include<string.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-<<<<<<< Updated upstream
+/*
+
 int segundo()
 {
 //ERASE UNA VEZ
@@ -32,7 +29,7 @@ int segundo()
     printf("Priemro!\n");
     return 0;
 }
-=======
+
 
 
 
@@ -52,9 +49,8 @@ strcpy(vec[13],"DX");
 strcpy(vec[14],"EX");
 strcpy(vec[15],"FX");
 }
-*/
-<<<<<<< Updated upstream
-=======
+
+
 /*
 void MOV(int *arg1,int *arg2){ //MOV AX,BX son int de 32 creo
 
@@ -130,7 +126,7 @@ void NOT(int *arg1, int *arg2){ //paso arg2 al pedo
 
 
 
->>>>>>> Stashed changes
+
 
 
 

@@ -1,5 +1,5 @@
 typedef struct nodo{
-    char label[];
+    char label[50];
     int line;
      struct nodo *sig;
 }nodo;

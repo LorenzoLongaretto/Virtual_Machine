@@ -8,12 +8,23 @@
 
 void load_register(char v_mnemonics[]){
     FILE *arch;
+    TLista L=NULL;
     int lineaActual=0,pos;
     char *filename="prueba.txt",auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t lineBinary;
     char lineB[33];
     arch=fopen(filename,"rt");
     if(arch!=NULL){
+         while (fgets(auxline,100,arch)!=NULL){
+            if (is_label(firstword)==1){
+                sscanf(auxline,"%s",firstword);
+                firstword[strlen(firstword)-1]='\0';//paso label sin :
+                add_label(&L,firstword,lineaActual);
+            }
+            lineaActual++;
+        }
+        rewind(arch);//vuelvo al principio
+        lineaActual=0;
         while(fgets(auxline,100,arch)!=NULL){
             sscanf(auxline,"%s",firstword);
             if(valid_line(auxline,v_mnemonics)){
@@ -28,11 +39,11 @@ void load_register(char v_mnemonics[]){
                 strcpy(second_arg,"NULL");//Nos avisa si solo hay un operador
                 sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);//Mnemonico y operandos
                 strupr(mnem);strupr(first_arg);strupr(second_arg);
-                write_mnemonic(find_nmemonic(mnem),lineBinary);
+                //write_mnemonic(find_nmemonic(mnem),lineBinary);
                 printf("%s %s %s \n",mnem,first_arg,second_arg);
                 strtok(first_arg,"],");//Dejamos pelado el primer operando
                 //Cargar el codigo
-                if(first_arg==NULL){//es STOP
+               /* if(first_arg==NULL){//es STOP
 
 
                 }
@@ -48,7 +59,7 @@ void load_register(char v_mnemonics[]){
                         opereitor(second_arg, lineBinary);
 
 
-                    }
+                    }*/
 
                 //opereitor(char ARG[],char *,int *codigo, int *,char v_mnemonics[24][5])
                 lineaActual++;
