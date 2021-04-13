@@ -38,13 +38,14 @@ int is_mnemonic(char string[], char v_mnemonics[24][5]){
         i++;
     return(i<=24);
 }
+
 int operandos(char string[]){
     return (string[strlen(string)-1]==',');
 }
+
 int is_label(char string[]){
     return (string[strlen(string)-1]==':');
 }
-
 
 int valid_line(char string[], char v_mnemonics[24][5]){    // string[] es la cadena completa de la linea del archivo
 char aux[10];
@@ -94,34 +95,35 @@ int i=0;
 
         return (i<=23)? i:-1;
 }
-/*
-<<<<<<< Updated upstream
-void opereitor(char mnem[],char ARG[],char *,int *codigo, int *,char v_mnemonics[24][5]){
 
-if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%'){// INMEDIATO
-
+int find_label(TLista L, char x[]){
+	TLista aux;
+	aux = L;
+	while (aux != NULL && strcmp(x,aux->dato) !=0)
+		aux = aux -> sig;
+	if(aux!=NULL)
+        return aux.line;
+    else
+        return -1;
 }
-else{
-    if (isalpha(ARG[0])){//REGISTRO
 
+void add_label(TLista *L, char x[]){//Inserta al principio
+    aux=(TLista)malloc(sizeof(nodo));
+    aux->dato=c;
+    aux->sig=NULL;
+    if (*L == NULL){
+        *L = aux;
+        ult = aux;
     }
     else{
-        if (ARG[0]=='['){ // DIRECTO
-        switch (ARG_A[1]){
-        case ('#' || isdigit(ARG[1])):
-            //decimal
-            break;
-        case '@':
-            //octal
-            break;
-        case '%'
-            //hexa
-            break;
-        default:
-            //caracter
-=======
-void opereitor(char ARG[], int32_t *lineBinary, TLista L_label, int flag_error){//ior
+        ult->sig = aux;
+        ult = aux;
+    }
+}
+
+void opereitor1(char ARG[], int32_t *lineBinary, TLista *L_label, int flag_error){
     char aux[];
+    int tipo;
     if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%'|| ARG[0] == '‘'){//OPERANDO INMEDIATO
 
         switch (ARG_A[1]){//Lo pasamos a binario
@@ -140,7 +142,60 @@ void opereitor(char ARG[], int32_t *lineBinary, TLista L_label, int flag_error){
         if (isalpha(ARG[0]) && strlen(ARG)==2){//OPERANDO REGISTRO, devuelve si es un registro
 
 
->>>>>>> Stashed changes
+        }
+        else{
+            if (ARG[0]=='['){ //OPERANDO DIRECTO (tener en cuenta que al argumento ya les quitamos el ultimo corchete y la coma)
+                if(issdigit(ARG[1]))//Porque en la primer posicion(cero) esta el ]
+                switch (ARG_A[1]){
+                case ('#' || isdigit(ARG[1])):
+                    //decimal
+                    break;
+                case '@':
+                    //octal
+                    break;
+                case '%'
+                    //hexa
+                    break;
+                default:
+                    //caracter
+                }
+            }
+        }
+        else{//Crear lista
+            list_pos = find_label(L_label, ARG);
+            if(lista_pos!=-1)//Si lo encontre
+                lineBinary
+                //(modifico int32, aplicar mascara);
+            else//No lo encontre
+                //aplicar mascara, fff1;
+                //bandera
+
+        }
+    }
+}
+
+void opereitor2(char ARG[], int32_t *lineBinary, TLista *L_label, int flag_error){//Caso para un argumento
+    char aux[];
+    //PONER en 1 los 4 nros mas significativos
+    llineBinary || E
+    if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%'|| ARG[0] == '‘'){//OPERANDO INMEDIATO
+
+        switch (ARG_A[1]){//Lo pasamos a binario
+                case ('#' || isdigit(ARG[1])):
+                    //decimal
+                    break;
+                case '@':
+                    //octal
+                    break;
+                case '%'
+                    //hexa
+                    break;
+                default:
+    }
+    else{
+        if (isalpha(ARG[0]) && strlen(ARG)==2){//OPERANDO REGISTRO, devuelve si es un registro
+
+
         }
         else{
             if (ARG[0]=='['){ //OPERANDO DIRECTO (tener en cuenta que al argumento ya les quitamos el ultimo corchete y la coma)
@@ -161,22 +216,7 @@ void opereitor(char ARG[], int32_t *lineBinary, TLista L_label, int flag_error){
             }
 
         }
-        else{//Crear lista
-            list_pos = find_label(ARG,L_label);
-            si esta
-                (modifico int32)
-            sino
-                "error"
-                bandera
-
-        }
     }
 }
-<<<<<<< Updated upstream
-}*/
-
-=======
-*/
->>>>>>> Stashed changes
 
 
