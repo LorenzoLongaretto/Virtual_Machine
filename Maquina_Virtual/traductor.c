@@ -128,63 +128,73 @@ void add_label(TLista *L, char x[],int actual_line){//Inserta al principio
     }
 }
 
-void opereitor1(char ARG[], int32_t *lineBinary, TLista *L_label, int flag_error){
-    char *aux;
-    int tipo,conversion=0;
-    if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%'|| ARG[0] == '‘'){//OPERANDO INMEDIATO
-        tipo=0;
+void opereitor1(char ARG[], int *salida,int *tipo, TLista L_label, int *flag_error, char v_registers[10][3]){
+    char aux[100], *paux;
+    int conversion=0;
+    if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%'/*|| ARG[0] == '‘'*/){//OPERANDO INMEDIATO
+        *tipo=0;
+        strcpy(aux,ARG);
+        strcpy(paux,aux);
+        //strcpy(paux,ARG);
         switch (ARG[0]){//Lo pasamos a binario
                 case ('#' || isdigit(ARG[0])):
                     //decimal
-                    strcpy(*aux,ARG);
-                    if(ARG[0]=='#'){
-                        aux++;
-                    }
-                    atoi(aux);
+                    if(ARG[0]=='#')
+                        //paux=strtok(ARG,"#");
+                        paux++;
+                    *salida=strtoul(paux,NULL,10);
+                    //*salida=atoi(paux);
                     break;
                 case '@':
                     //octal
-                    conversion=strtoul(aux,NULL,8);
+                    paux++;
+                    *salida=strtoul(paux,NULL,8);
                     break;
                 case '%':
                     //hexa
-                    conversion=strtoul(aux,NULL,16);
+                    paux++;
+                    *salida=strtoul(paux,NULL,16);
+                    //printf("EL NUMERO ES: %d\n", *salida);
                     break;
-               // default:
+                default: //es char
+                    *salida=ARG[1];
     }
     }
     else{
         if (isalpha(ARG[0]) && strlen(ARG)==3){//OPERANDO REGISTRO, devuelve si es un registro
-        tipo=1;
-
+            *tipo=1;
+            *salida=find_register(ARG,v_registers);
         }
         else{
             if (ARG[0]=='['){ //OPERANDO DIRECTO (tener en cuenta que al argumento ya les quitamos el ultimo corchete y la coma)
-            tipo=2;
-                strcpy(*aux,ARG);
-                aux++;
+            *tipo=2;
+                strcpy(aux,ARG);
+                *paux=aux;
+                paux++;
                 switch (ARG[1]){//Porque en la primer posicion(cero) esta el ]
                 case ('#' || isdigit(ARG[1])):
                     //decimal
-                    atoi(aux);
+                    if(ARG[0]=='#'){
+                        paux++;
+                    }
+                    *salida=atoi(aux);
                     break;
                 case '@':
-                    //octal
-                    conversion=strtoul(aux,NULL,8);
+                    paux++;
+                    *salida=strtoul(aux,NULL,8);
                     break;
                 case '%':
                     //hexa
-                    conversion=strtoul(aux,NULL,16);
+                     paux++;
+                    *salida=strtoul(aux,NULL,16);
                     break;
                 default:
-                    //caracter
-                    //RECORDAR poner el DS
-                    conversion=aux; //int=char
+                    *salida=ARG[1];
                 }
             }
-        }
+        }/*
         if(is_label){//Crear lista
-            tipo=0; //el rotulo es inmediato
+            *tipo=0; //el rotulo es inmediato
             list_pos = find_label(L_label, ARG);
             if(lista_pos!=-1)//Si lo encontre
                 lineBinary
@@ -193,10 +203,11 @@ void opereitor1(char ARG[], int32_t *lineBinary, TLista *L_label, int flag_error
                 //aplicar mascara, fff1;
                 //bandera
 
-        }
+        }*/
     }
 }
-}
+
+/*
 void opereitor2(char ARG[], int32_t *lineBinary, TLista *L_label, int flag_error){//Caso para un argumento
     char aux[];
     //PONER en 1 los 4 nros mas significativos
@@ -240,6 +251,6 @@ void opereitor2(char ARG[], int32_t *lineBinary, TLista *L_label, int flag_error
 
         }
     }
-}
+}*/
 
 

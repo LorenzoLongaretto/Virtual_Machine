@@ -27,43 +27,47 @@ void load_register(char v_mnemonics[]){
         lineaActual=0;
         while(fgets(auxline,100,arch)!=NULL){
             sscanf(auxline,"%s",firstword);
-            if(valid_line(auxline,v_mnemonics)){
-                strcpy(auxline,strtok(auxline,";"));//Elimina los comenarios
-
-                if(only_label(auxline) != NULL){   //Elimina los rotulos, revisar doble llamado, problema:only label devuelve char o NULL
-                        sscanf(auxline,"%s",label);//Guarda label
-                        //listLabels(*l_labels,label);
-                        strcpy(auxline,only_label(auxline));//Elimina rotulo
-                }
-                strcpy(first_arg,"NULL");//Nos avisa si NO hay operador
-                strcpy(second_arg,"NULL");//Nos avisa si solo hay un operador
-                sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);//Mnemonico y operandos
+          //  if(valid_line(auxline,v_mnemonics)){
+                strcpy(auxline,strtok(auxline,";"));
+                if(only_label(auxline) != NULL)
+                    strcpy(auxline,only_label(auxline));
+                strcpy(first_arg,"NULL");
+                strcpy(second_arg,"NULL");
+                sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);
                 strupr(mnem);strupr(first_arg);strupr(second_arg);
-                //write_mnemonic(find_nmemonic(mnem),lineBinary);
-                printf("%s %s %s \n",mnem,first_arg,second_arg);
-                strtok(first_arg,"],");//Dejamos pelado el primer operando
-                //Cargar el codigo
-               /* if(first_arg==NULL){//es STOP
-
-
+                if(strcmp(second_arg,"NULL")!=0){ //2 operandos
+                    memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
+                    opereitor1(first_arg,&salida,L, &tipo,&error,v_registers);
+                    memoria[lineaActual]|=( tipo <<26& 0x0C000000); //tipo primer arg,la C es para deja el op a e inicializa el b
+                    memoria[lineaActual]|= (salida<<12 & 0x00FFF000); //primer arg
+                    opereitor1(second_arg,&salida,L, &tipo,&error,v_registers);
+                    memoria[lineaActual]|= (tipo<<24 & 0x03000000);//tipo 2do arg
+                    memoria[lineaActual]|= (salida & 0x00000FFF);//no necesita shifteos
+                    printf("%04X \n",memoria[lineaActual]);
                 }
-                else
-                    if(second_arg==NULL){//1Argumento
-                        //void opereitor(char ARG[],char *,int *codigo, int *,char v_mnemonics[24][5]){//Devuelve los argumentos y el codigo de operacion en binario para su posterior
-                        opereitor(first_arg, lineBinary);
-
+                else{
+                    if(strcmp(first_arg,"NULL")!=0){
+                        opereitor1(first_arg,&salida,L, &tipo,&error,v_registers);
+                        memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
+                        memoria[lineaActual]|= (tipo <<22 & 0x00C00000); //tipo operando
+                        //printf("%04X \n",memoria[lineaActual]);
+                        memoria[lineaActual]|=(salida & 0x00000FFF) ; //
+                        //PRUEBA = memoria[lineaActual];
+                        //printf("EL INT32es: %d");
+                        printf("%08X \n",memoria[lineaActual]);
                     }
+                    else{//es stop
+                            //yoquese
+                    }
+                }
+//                printf("%s %s %s \n",mnem,first_arg,second_arg);
 
-                    else{//2Argumentos
-                        opereitor(first_arg, lineBinary);
-                        opereitor(second_arg, lineBinary);
+                //Cargar el codigo
 
-
-                    }*/
 
                 //opereitor(char ARG[],char *,int *codigo, int *,char v_mnemonics[24][5])
                 lineaActual++;
-            }
+           // }
             else{
                 printf("linea no valida");
                 //Lineas en blanco
