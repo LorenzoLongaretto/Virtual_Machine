@@ -71,9 +71,9 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
             else
                 memoria[lineaActual]=0xFFFFFFFF;//no ha menem
             if (firstword[0]=='\0')
-                printf("[%04d]: %02x %02X %02X %02X \t %d: \t%s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
+                printf("[%04d]: %02X %02X %02X %02X \t %d: \t%s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
             else
-                printf("[%04d]: %02x %02X %02X %02X \t %s \t %s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
+                printf("[%04d]: %02X %02X %02X %02X \t %s \t %s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
             lineaActual++;
         }
     }
