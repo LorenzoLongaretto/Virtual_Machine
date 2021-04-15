@@ -4,7 +4,7 @@
 #include "traductor.h"
 #include<ctype.h>
 
-void create_mnemonics(char v_mnemonics[254][5]){
+void create_mnemonics(char v_mnemonics[253][5]){
 int i;
     for (i=0;i<16;i++)
         strcpy(v_mnemonics[i],"");
@@ -64,7 +64,15 @@ int is_label(char string[]){
     return (string[strlen(string)-1]==':');
 }
 
-
+int valid_line(char string[]){    // string[] es la cadena completa de la linea del archivo
+char aux[10];
+    sscanf(string,"%s",aux);//leo el primer string de toda la cadena
+    if (string[0]=='\n' ||string[0]=='\t'||string[0]==';') //si no es espacio laburo
+        return 0;
+    else
+        return 1;
+}
+/*
 int valid_line(char string[], char v_mnemonics[24][5]){    // string[] es la cadena completa de la linea del archivo
 char aux[10];
     sscanf(string,"%s",aux);//leo el primer string de toda la cadena
@@ -78,7 +86,7 @@ char aux[10];
     }
     else
         return 0;
-}
+}*/
 
 char *only_label(char string[]){
     char ch = ':', *ret;
@@ -90,31 +98,16 @@ char *only_label(char string[]){
     else
       return NULL;
 }
-/*
-int filter_num(char auxline[]){//Filtra los numeros dada una cadena
-int num,i,j=0;
-char straux[100];
-    for (i=0;i<strlen(auxline);i++)
-        if (auxline[i]>='0' && auxline[i]<='9'){
-            straux[j]=auxline[i];
-            straux[j+1]="\0";
-            j++;
-        }
-    if (straux[0]!='\0')
-        return atoi(straux); //pasa string a decimal, ej '1' pasa a 1
-    else
-        return -1;
-}
-*/
-int find_nmemonic(char *mnem,char v_mnemonics[24][5]){ //paso la linea completa y busca en el vector y devuelve la posicion
+
+int find_nmemonic(char *mnem,char v_mnemonics[253][5]){ //paso la linea completa y busca en el vector y devuelve la posicion
 int i=0;
-    while((strcmp(mnem,v_mnemonics[i]) != 0) && i<=260)
+    while((strcmp(mnem,v_mnemonics[i])!= 0) && (i<=260))
         i++;
         return (i<=260)? i:-1;
 }
 
 void add_label(TLista *L, char x[],int actual_line){//Inserta al final
-    TLista aux,ult;
+    TLista aux;
     aux=(TLista)malloc(sizeof(nodo));
     aux->line=actual_line;
     aux->sig=NULL;
@@ -158,7 +151,7 @@ while (L!=NULL){
 return 0x00000FFF;
 }
 
-void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *flag_error, char v_registers[]){
+void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[]){
     char aux[10];
     clean_arg(ARG,aux);
     if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0] == '‘'){//OPERANDO INMEDIATO
@@ -208,6 +201,8 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *flag_er
             }
             else{//es rotulo
                 *salida=find_label(L_label,ARG);
+                if(*salida==0x00000FFF)
+                    *error=1;
             }
         }
 
