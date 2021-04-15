@@ -1,16 +1,17 @@
+rotulo: mov [10], 0 ;inicializo variables
 ad [#10], @10 ;comentario
 mov EX #20
 mov %A %5
 rotulo: mov [10], 0 ;inicializo variables
 MOV [20], 1
 otro: cmp [20], 100 ;compara
-jp fin ;salta si llegó a 100 o más
+jp fin ;salta si llega a 100 o mas
 swap [10], [20]
-add [20], [10];
+add [20], [10]
 jp picha
 mov ax, %001
 mov cx, 1
-mov dx, 10
+mov dx, 10; el que lee es gay
 sys 2 ;print [10] en decimal
 jmp otro
 fin: stop

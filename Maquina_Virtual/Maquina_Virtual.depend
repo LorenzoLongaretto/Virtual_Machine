@@ -37,14 +37,20 @@
 	<stdio.h>
 	<stdlib.h>
 
-1617921274 c:\users\robert\documents\github\virtual_machine\maquina_virtual\1.h
+1618269863 c:\users\robert\documents\github\virtual_machine\maquina_virtual\1.h
 
 1618084842 ated upstream
 	<ctype.h>
 	<stdint.h>
 
-1618414131 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.c
+1618452280 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.c
 	"1.h"
+	<stdio.h>
+	<stdlib.h>
+	"instrucciones.h"
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
 
 1618420621 shed changes
 	<stdio.h>
@@ -55,9 +61,14 @@
 	<string.h>
 	"traductor.h"
 
-1618421867 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.c
+1618503263 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"traductor.h"
+	<ctype.h>
 
-1618420236 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\main.c
+1618510742 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -65,9 +76,9 @@
 	"traductor.h"
 	<ctype.h>
 
-1618084842 c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.h
+1618333637 c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.h
 
-1618420621 c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.h
+1618452280 c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.h
 
 1618447354 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.h
 

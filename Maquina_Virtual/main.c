@@ -18,7 +18,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
     int lineaActual=0,error,tipo1,tipo2;
     char *filename="prueba.txt",auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t salida1,salida2;
-    char *comentario;
+    char comentario[100];
     arch=fopen(filename,"rt");
     if(arch!=NULL){
          while (fgets(auxline,100,arch)!=NULL){
@@ -35,7 +35,9 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
         lineaActual=0;
         while(fgets(auxline,100,arch)!=NULL){
             sscanf(auxline,"%s",firstword);
-    //        comentario=strchr(auxline,';');
+            comentario[0]='\0';
+            if(strchr(auxline,';')!=NULL)//Porque si devuelve NULL se rompe el strcpy que uso abajo
+                strcpy(comentario,strchr(auxline,';'));
             strcpy(auxline,strtok(auxline,";\n"));
             firstword[0]='\0';
             if(only_label(auxline) != NULL){
@@ -62,7 +64,6 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                         opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
                         memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando
                         memoria[lineaActual]|=(salida1 & 0x00000FFF) ; //
-      //                      printf("%08X \n",memoria[lineaActual]);
                     }
                     else// es stop
                         memoria[lineaActual]= 0xFF100000;
@@ -71,9 +72,16 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
             else
                 memoria[lineaActual]=0xFFFFFFFF;//no ha menem
             if (firstword[0]=='\0')
-                printf("[%04d]: %02X %02X %02X %02X \t %d: \t%s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
+                if(comentario[0]=='\0')
+                    printf("[%04d]: %02X %02X %02X %02X \t\t %d: \t\t%s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
+                else
+                    printf("[%04d]: %02X %02X %02X %02X \t\t %d: \t\t%s \t\t%s",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline,comentario);
+
             else
-                printf("[%04d]: %02X %02X %02X %02X \t %s \t %s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
+                if(comentario[0]=='\0')
+                    printf("[%04d]: %02X %02X %02X %02X \t %s \t\t%s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
+                else
+                    printf("[%04d]: %02X %02X %02X %02X \t\t %s \t%s \t%s",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline,comentario);
             lineaActual++;
         }
     }
