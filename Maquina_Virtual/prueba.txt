@@ -1,4 +1,4 @@
-add [#10], @10 ;comentario
+ad [#10], @10 ;comentario
 mov EX #20
 mov %A %5
 rotulo: mov [10], 0 ;inicializo variables
@@ -7,6 +7,7 @@ otro: cmp [20], 100 ;compara
 jp fin ;salta si llegó a 100 o más
 swap [10], [20]
 add [20], [10];
+jp picha
 mov ax, %001
 mov cx, 1
 mov dx, 10

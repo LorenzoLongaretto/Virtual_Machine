@@ -24,61 +24,58 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
          while (fgets(auxline,100,arch)!=NULL){
             sscanf(auxline,"%s",firstword);
             if (is_label(firstword)){
+                strupr(firstword);
                 firstword[strlen(firstword)-1]='\0';//paso label sin :
                 add_label(&L,firstword,lineaActual);
             }
             lineaActual++;
         }
+        muestra(L);
         rewind(arch);//vuelvo al principio
         lineaActual=0;
         while(fgets(auxline,100,arch)!=NULL){
             sscanf(auxline,"%s",firstword);
-            comentario=strchr(auxline,';');
+    //        comentario=strchr(auxline,';');
             strcpy(auxline,strtok(auxline,";\n"));
-           // printf("%s",comentario);
-            if(only_label(auxline) != NULL)
+            firstword[0]='\0';
+            if(only_label(auxline) != NULL){
+                    sscanf(auxline,"%s",firstword);
                     strcpy(auxline,only_label(auxline));
+            }
             strcpy(first_arg,"NULL");
             strcpy(second_arg,"NULL");
             sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);
             strupr(mnem);strupr(first_arg);strupr(second_arg);
-            if(strcmp(second_arg,"NULL")!=0){ //2 operandos
-                memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;//necesito que salga en hexa de find_nmen
-                opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
-                opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers);
-                //printf("%02X   02X   02X   02X", find_nmemonic(mnem,v_mnemonics), tipo, salida1);
-                memoria[lineaActual]|= (tipo1 <<26& 0x0C000000); //tipo primer arg
-                memoria[lineaActual]|= (tipo2<<24 & 0x03000000);//tipo 2do arg
-                memoria[lineaActual]|= (salida1<<12 & 0x00FFF000); //primer arg (en hexa)
-                memoria[lineaActual]|= (salida2 & 0x00000FFF);//no necesita shifteos
-                if (comentario!=NULL)
-                    printf("[%04d]: %02x %02X %02X %02X %s %s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,auxline,comentario);
-                else
-                    printf("[%04d] %02x %02X %02X %02X %s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,auxline);
-                    printf("%08X \n",memoria[lineaActual]);
-          //          printf("%02hX \n",memoria[lineaActual] & 0xFF000000);
-            }
-            else{
-                if(strcmp(first_arg,"NULL")!=0){
+            if (find_nmemonic(mnem,v_mnemonics)!=-1){
+                if(strcmp(second_arg,"NULL")!=0){ //2 operandos
+                    memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
                     opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
-                    memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
-                    memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando
-                    memoria[lineaActual]|=(salida1 & 0x00000FFF) ; //
-  //                      printf("%08X \n",memoria[lineaActual]);
+                    opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers);
+                    memoria[lineaActual]|= (tipo1 <<26& 0x0C000000); //tipo primer arg
+                    memoria[lineaActual]|= (tipo2<<24 & 0x03000000);//tipo 2do arg
+                    memoria[lineaActual]|= (salida1<<12 & 0x00FFF000); //primer arg (en hexa)
+                    memoria[lineaActual]|= (salida2 & 0x00000FFF);//no necesita shifteos
                 }
-                else{//es stop
-                            //yoquese
+                else{
+                    if(strcmp(first_arg,"NULL")!=0){
+                        memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
+                        opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
+                        memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando
+                        memoria[lineaActual]|=(salida1 & 0x00000FFF) ; //
+      //                      printf("%08X \n",memoria[lineaActual]);
+                    }
+                    else// es stop
+                        memoria[lineaActual]= 0xFF100000;
                 }
- //                 printf("%02X \n",memoria[lineaActual]& 0xFF000000);
-  //                 printf("%02X %02X %02X %02X \n",memoria[lineaActual]& 0xFF000000,memoria[lineaActual]& 0x00FF0000,memoria[lineaActual]& 0x0000FF00,memoria[lineaActual]& 0x00000FF0);
-                }
-                lineaActual++;
+            }
+            else
+                memoria[lineaActual]=0xFFFFFFFF;//no ha menem
+            if (firstword[0]=='\0')
+                printf("[%04d]: %02x %02X %02X %02X \t %d: \t%s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
+            else
+                printf("[%04d]: %02x %02X %02X %02X \t %s \t %s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
+            lineaActual++;
         }
-        /*
-        if(no hay errores, estan los rotulos y no me pase de memoria){
-            escribo el .dat con el vector memoria
-        }
-        */
     }
     fclose(arch);
 }

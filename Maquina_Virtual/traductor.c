@@ -149,9 +149,14 @@ int i=0,j=0;
     }
 
 }
-
-
-
+int find_label(TLista L,char x[]){
+while (L!=NULL){
+    if(strcmp(L->label,x)==0)
+        return L->line;
+    L=L->sig;
+}
+return 0x00000FFF;
+}
 
 void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *flag_error, char v_registers[]){
     char aux[10];
@@ -201,17 +206,11 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *flag_er
                     *salida=strtoul(aux,NULL,10);
                 }
             }
-        }/*
-        if(is_label){//Crear lista
-            *tipo=0; //el rotulo es inmediato
-            list_pos = find_label(L_label, ARG);
-            if(lista_pos!=-1)//Si lo encontre
-                lineBinary
-                //(modifico int32, aplicar mascara);
-            else//No lo encontre
-                //aplicar mascara, fff1;
-                //bandera
-        }*/
+            else{//es rotulo
+                *salida=find_label(L_label,ARG);
+            }
+        }
+
     }
 }
 
