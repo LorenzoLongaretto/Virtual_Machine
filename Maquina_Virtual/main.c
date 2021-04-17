@@ -77,7 +77,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                             memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
                             opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
                             memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando
-                            memoria[lineaActual]|=(salida1 & 0x00000FFF) ; //
+                            memoria[lineaActual]|=(salida1 & 0x0000FFFF) ; //
                         }
                         else// es stop
                             memoria[lineaActual]= 0xFF100000;
