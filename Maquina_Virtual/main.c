@@ -25,6 +25,7 @@ for (i=0;i<N;i++){
 void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
     FILE *arch;
     TLista L=NULL;
+    float flot;
     int lineaActual=0,error=0,tipo1,tipo2;
     char *filename="prueba.txt",auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t salida1,salida2;
@@ -72,6 +73,8 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                         memoria[lineaActual]|= (tipo2<<24 & 0x03000000);//tipo 2do arg
                         memoria[lineaActual]|= (salida1<<12 & 0x00FFF000); //primer arg (en hexa)
                         memoria[lineaActual]|= (salida2 & 0x00000FFF);//no necesita shifteos
+                        salida1=trunc_warning(salida1);
+                        salida2=trunc_warning(salida2);
                     }
                     else{
                         if(strcmp(first_arg,"NULL")!=0){
