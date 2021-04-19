@@ -145,7 +145,7 @@ int cant_zero = 0;
 void clean_arg(char str[], char aux[]){//Entra str y devuelve un aux solo con el numero
 int i=0,j=0;
     while(str[i]!='\0'){
-        if((str[i]>='0' && str[i]<='9') || isalpha(str[i])){
+        if((str[i]>='0' && str[i]<='9'||str[i]=='-') || isalpha(str[i])){
             aux[j]=str[i];
             aux[j+1]='\0';
             j++;
@@ -167,7 +167,7 @@ return 0x00000FFF;
 void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[]){
     char aux[10];
     clean_arg(ARG,aux);
-    if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0] == '‘'){//OPERANDO INMEDIATO
+    if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0] == '‘'|| ARG[0] == '-'){//OPERANDO INMEDIATO
         *tipo=0;
         switch (ARG[0]){//Lo pasamos a binario
                 case '‘':

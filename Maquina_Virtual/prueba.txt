@@ -1,4 +1,4 @@
-otro: cmp [9876], 4095 ;compara
+otro: cmp [9876], -8 ;compara
 mov [10],0 ;inicializo variables
 mov [20],1
 otro: cmp [20], 100 ;compara
