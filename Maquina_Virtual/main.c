@@ -27,7 +27,8 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
     TLista L=NULL;
     int lineaActual=0,error=0,tipo1,tipo2;
     char *filename="prueba.txt",auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10];//finalLine es la linea sin rotulo ni comentarios
-    int32_t salida1,salida2;
+    //int32_t salida1,salida2;
+    int salida1,salida2;
     char comentario[100];
     arch=fopen(filename,"rt");
     if(arch!=NULL){
@@ -70,6 +71,12 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                         opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers);
                         memoria[lineaActual]|= (tipo1 <<26& 0x0C000000); //tipo primer arg
                         memoria[lineaActual]|= (tipo2<<24 & 0x03000000);//tipo 2do arg
+                       /* if(salida1 >4095)
+                            salida1&=0xFFF;
+                        if(salida2>4095){
+                            salida2>>=1;  // 0x1001 x100 FFF
+                           // salida2&=0xFFF;
+                        }*/
                         memoria[lineaActual]|= (salida1<<12 & 0x00FFF000); //primer arg (en hexa)
                         memoria[lineaActual]|= (salida2 & 0x00000FFF);//no necesita shifteos
                     }
@@ -78,6 +85,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                             memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
                             opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
                             memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando
+                            if (salida1 >65535) salida1&=0xFFFF;
                             memoria[lineaActual]|=(salida1 & 0x0000FFFF) ;
                         }
                         else// es stop
@@ -85,7 +93,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                     }
                 }
                 else{
-                    memoria[lineaActual]=0xFFFFFFFF;//no ha menem
+                    memoria[lineaActual]=0xFFFFFFFF;//no hay menem
                     error=1;
                 }
                 if (firstword[0]=='\0')
