@@ -72,24 +72,9 @@ char aux[10];
     else
         return 1;
 }
-/*
-int valid_line(char string[], char v_mnemonics[24][5]){    // string[] es la cadena completa de la linea del archivo
-char aux[10];
-    sscanf(string,"%s",aux);//leo el primer string de toda la cadena
-    if (!isspace(aux[0])){ //si no es espacio laburo
-         if (is_label(aux)){ //si es rotulo avanzo la lectura y veo si es instrucion
-            sscanf(string,"%s %s",aux,aux);
-            return is_mnemonic(strupr(aux),v_mnemonics); //toupper no funca SI TENEMOS QUE HACER UN VOID PARA
-         }                                                      //HACER MAYUS LA CADENA HAY QUE PASAR ESTA FUNCION A VOID
-         else //si no es rotulo puede ser instruccion
-            return is_mnemonic(strupr(aux),v_mnemonics); //puedo sacar factor comun esta linea
-    }
-    else
-        return 0;
-}*/
 
 char *only_label(char string[]){
-    char ch = ':', *ret;
+char ch = ':', *ret;
     ret = strchr(string,ch);
     if (ret!=NULL){//Si hay label es !=NULL
       ret = strtok(ret,":");
@@ -130,6 +115,14 @@ int i=0;
     return i;
 }
 
+void change_char(char str[]){
+int size=strlen(str), i=0;
+    while(str[i]!=',' && i<size)
+        i++;
+    if(i<size)
+        str[i]=' ';
+}
+
 void clean_arg(char str[], char aux[]){//Entra str y devuelve un aux solo con el numero
 int i=0,j=0;
     while(str[i]!='\0'){
@@ -142,6 +135,7 @@ int i=0,j=0;
     }
 
 }
+
 int find_label(TLista L,char x[]){
 while (L!=NULL){
     if(strcmp(L->label,x)==0)

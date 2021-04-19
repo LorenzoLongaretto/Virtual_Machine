@@ -44,26 +44,27 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
             }
         }
    //     muestra(L);
-        rewind(arch);//vuelvo al principio
+        rewind(arch);
         lineaActual=0;
         while(fgets(auxline,100,arch)!=NULL){
             if(valid_line(auxline)){
                 sscanf(auxline,"%s",firstword);
                 comentario[0]='\0';
-                if(strchr(auxline,';')!=NULL)//Porque si devuelve NULL se rompe el strcpy que uso abajo
+                if(strchr(auxline,';')!=NULL)
                     strcpy(comentario,strchr(auxline,';'));
                 strcpy(auxline,strtok(auxline,";\n"));
                 firstword[0]='\0';
                 if(only_label(auxline) != NULL){
-                        sscanf(auxline,"%s",firstword);
-                        strcpy(auxline,only_label(auxline));
+                    sscanf(auxline,"%s",firstword);
+                    strcpy(auxline,only_label(auxline));
                 }
                 strcpy(first_arg,"NULL");
                 strcpy(second_arg,"NULL");
+                change_char(auxline);
                 sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);
                 strupr(mnem);strupr(first_arg);strupr(second_arg);
                 if (find_nmemonic(mnem,v_mnemonics)!=-1){
-                    if(strcmp(second_arg,"NULL")!=0){ //2 operandos
+                    if(strcmp(second_arg,"NULL")!=0){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
                         opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
                         opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers);
@@ -77,7 +78,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                             memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
                             opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
                             memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando
-                            memoria[lineaActual]|=(salida1 & 0x0000FFFF) ; //
+                            memoria[lineaActual]|=(salida1 & 0x0000FFFF) ;
                         }
                         else// es stop
                             memoria[lineaActual]= 0xFF100000;
