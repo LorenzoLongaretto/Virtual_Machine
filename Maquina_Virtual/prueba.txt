@@ -1,5 +1,5 @@
-otro: cmp [20], 100 ;compara
-
+mov ax, -8
+otro: cmp [20], -1 ;compara
 mov [10],0 ;inicializo variables
 mov [20],1
 otro: cmp [20], 100 ;compara
