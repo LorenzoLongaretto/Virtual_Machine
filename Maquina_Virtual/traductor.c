@@ -123,6 +123,25 @@ int size=strlen(str), i=0;
         str[i]=' ';
 }
 
+int count_digit(int n){
+int count=0;
+     while (n != 0){
+        n /= 10;
+        ++count;
+    }
+    return count;
+}
+
+int trunc_warning(nro){
+int cant_zero = 0;
+     while(nro>4095 && cant_zero!=1){ //Por ejemplo 21439 -> 2143 pero 91439 -> 914
+        cant_zero = pow(10,-3+count_digit(nro));
+        if(nro*10/cant_zero<4095)
+            cant_zero/=10;
+        nro = nro/cant_zero;
+    }
+}
+
 void clean_arg(char str[], char aux[]){//Entra str y devuelve un aux solo con el numero
 int i=0,j=0;
     while(str[i]!='\0'){
