@@ -69,6 +69,14 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
                         opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
                         opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers);
+                        if(salida1>2048) //WARNING PROVISIONAL PONER CONTADOR
+                            salida1&=0x000007FF;
+                        else{
+                            if(salida1<-2047){
+                                salida1>>=1;
+                                salida1&=0x00000FFF;
+                            }
+                        }
                         memoria[lineaActual]|= (tipo1 <<26& 0x0C000000); //tipo primer arg
                         memoria[lineaActual]|= (tipo2<<24 & 0x03000000);//tipo 2do arg
                         memoria[lineaActual]|= (salida1<<12 & 0x00FFF000); //primer arg (en hexa)
