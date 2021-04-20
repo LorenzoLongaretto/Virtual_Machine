@@ -15,8 +15,9 @@ void muestra (TLista L){
 void create_arch(int32_t memoria[],int N){
 int i;
 FILE *arch;
-arch=fopen("nombredebinario.dat","wb");
+arch=fopen("fibo.dat","wb");
 for (i=0;i<N;i++){
+    printf("[%04d]: %02X %02X %02X %02X \t\n",i,(memoria[i]& 0xFF000000)>>24,(memoria[i]& 0x00FF0000)>>16,(memoria[i]& 0x0000FF00)>>8,memoria[i]);
     fwrite(&memoria[i],sizeof(memoria[i]),1,arch);
 }
 
@@ -120,11 +121,12 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
     }
     fclose(arch);
 if(!error){
+    printf("-----------------------------------");
     create_arch(memoria,lineaActual);
 }
 }
 
-int main(int argc, char *argv[])
+int main()
 {
     int32_t memoria[4096];
     int DS=0,x; //DATA SEGMENT
