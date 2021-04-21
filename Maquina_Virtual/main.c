@@ -17,7 +17,7 @@ int i;
 FILE *arch;
 arch=fopen("fibo.dat","wb");
 for (i=0;i<N;i++){
-    printf("[%04d]: %02X %02X %02X %02X \t\n",i,(memoria[i]& 0xFF000000)>>24,(memoria[i]& 0x00FF0000)>>16,(memoria[i]& 0x0000FF00)>>8,memoria[i]);
+   // printf("[%04d]: %02X %02X %02X %02X \t\n",i,(memoria[i]& 0xFF000000)>>24,(memoria[i]& 0x00FF0000)>>16,(memoria[i]& 0x0000FF00)>>8,memoria[i]);
     fwrite(&memoria[i],sizeof(memoria[i]),1,arch);
 }
 
@@ -27,7 +27,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
     FILE *arch;
     TLista L=NULL;
     float flot;
-    int lineaActual=0,error=0,tipo1,tipo2;
+    int lineaActual=0,error=0,tipo1,tipo2,warningcont=0;;
     char *filename="prueba.txt",auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t salida1,salida2;
     char comentario[100];
@@ -70,25 +70,22 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
                         opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
                         opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers);
-                        if(salida1>2048) //WARNING PROVISIONAL PONER CONTADOR
-                            salida1&=0x000007FF;
-                        else{
-                            if(salida1<-2047){
-                                salida1>>=1;
-                                salida1&=0x00000FFF;
-                            }
-                        }
+                        if(salida1>0x00000FFF) //WARNING
+                            warningcont+=1;
+                        if(salida2>0x00000FFF)
+                            warningcont+=1;
                         memoria[lineaActual]|= (tipo1 <<26& 0x0C000000); //tipo primer arg
                         memoria[lineaActual]|= (tipo2<<24 & 0x03000000);//tipo 2do arg
                         memoria[lineaActual]|= (salida1<<12 & 0x00FFF000); //primer arg (en hexa)
                         memoria[lineaActual]|= (salida2 & 0x00000FFF);//no necesita shifteos
-                        salida1=trunc_warning(salida1);
-                        salida2=trunc_warning(salida2);
+
                     }
                     else{
                         if(strcmp(first_arg,"NULL")!=0){
                             memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
                             opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers);
+                            if(salida1>0x0000FFFF) //WARNING
+                            warningcont+=1;
                             memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando
                             memoria[lineaActual]|=(salida1 & 0x0000FFFF) ;
                         }
@@ -120,8 +117,10 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
         }
     }
     fclose(arch);
+if(warningcont!=0)
+    printf("hay %d warnings",warningcont);
 if(!error){
-    printf("-----------------------------------");
+
     create_arch(memoria,lineaActual);
 }
 }
