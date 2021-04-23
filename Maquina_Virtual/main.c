@@ -5,30 +5,23 @@
 #include "traductor.h"
 #include<ctype.h>
 
-void muestra (TLista L){
-    while (L!=NULL){
-        printf("%s %d \n",L->label,L->line);
-        L=L->sig;
-    }
-}
-
-void create_arch(int32_t memoria[],int N){
+void create_arch(int32_t memoria[],int N,char *filename){
 int i;
 FILE *arch;
-arch=fopen("fibo.dat","wb");
+arch=fopen(filename,"wb");
 for (i=0;i<N;i++){
-   // printf("[%04d]: %02X %02X %02X %02X \t\n",i,(memoria[i]& 0xFF000000)>>24,(memoria[i]& 0x00FF0000)>>16,(memoria[i]& 0x0000FF00)>>8,memoria[i]);
     fwrite(&memoria[i],sizeof(memoria[i]),1,arch);
 }
+fclose(arch);
 
 }
 
-void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
+void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char *argv[]){
     FILE *arch;
     TLista L=NULL;
     float flot;
     int lineaActual=0,error=0,tipo1,tipo2,warningcont=0;;
-    char *filename="prueba.txt",auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10];//finalLine es la linea sin rotulo ni comentarios
+    char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t salida1,salida2;
     char comentario[100];
     arch=fopen(filename,"rt");
@@ -45,7 +38,6 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
             lineaActual++;
             }
         }
-   //     muestra(L);
         rewind(arch);
         lineaActual=0;
         while(fgets(auxline,100,arch)!=NULL){
@@ -97,46 +89,42 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[]){
                     memoria[lineaActual]=0xFFFFFFFF;//no ha menem
                     error=1;
                 }
-                if (firstword[0]=='\0')
-                    if(comentario[0]=='\0')
-                        printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
-                    else
-                        printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s \t%s",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline,comentario);
+                if(strcmp(argv[3],"-o")!=0){
+                    if (firstword[0]=='\0')
+                        if(comentario[0]=='\0')
+                            printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
+                        else
+                            printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s \t%s",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline,comentario);
 
-                else
-                    if(comentario[0]=='\0')
-                        printf("[%04d]: %02X %02X %02X %02X\t%s\t%s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
                     else
-                        printf("[%04d]: %02X %02X %02X %02X\t%s\t%s\t%s",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline,comentario);
-                lineaActual++;
+                        if(comentario[0]=='\0')
+                            printf("[%04d]: %02X %02X %02X %02X\t%s\t%s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
+                        else
+                            printf("[%04d]: %02X %02X %02X %02X\t%s\t%s\t%s",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline,comentario);
+                    lineaActual++;
+                }
             }
-            else{
+            else
+                if(strcmp(argv[3],"-o")!=0)
                 printf("%s",auxline);
-        }
-
         }
     }
     fclose(arch);
 if(warningcont!=0)
     printf("hay %d warnings",warningcont);
 if(!error){
-
-    create_arch(memoria,lineaActual);
+    create_arch(memoria,lineaActual,argv[2]);
 }
 }
 
 int main(int argc, char *argv[])
 {
-    while(*argv==NULL){
-        printf("escriba el nombre del txt");
-        scanf("%s",argv);
-    }
+
     int32_t memoria[4096];
-    int DS=0,x; //DATA SEGMENT
     char v_mnemonics[24][5], v_registers[16][3];
     create_mnemonics(v_mnemonics);
     create_registers(v_registers);
-    load_register(memoria,v_mnemonics,v_registers);
+    load_register(memoria,v_mnemonics,v_registers,argv);
     return 0;
 
 }
