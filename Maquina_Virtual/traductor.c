@@ -65,7 +65,7 @@ int is_label(char string[]){
 }
 
 int valid_line(char string[]){    // string[] es la cadena completa de la linea del archivo
-char aux[10];
+char aux[100];
     sscanf(string,"%s",aux);//leo el primer string de toda la cadena
     if (string[0]=='\n' ||string[0]=='\t'||string[0]==';') //si no es espacio laburo
         return 0;

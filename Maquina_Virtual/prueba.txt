@@ -1,11 +1,19 @@
-mov [10], 4100 ;inicializo variables
-mov [20], 1
-otro: cmp [20], 100 ;compara
-jp fin ;salta si llegó a 100 o más
-swap [10], [20]
-add [20], [10]
-mov ax, %001
-mov cx, 1
-mov dx, 10
+;ejercicio1---------------------------
+xor FX,FX
+mov [2],0
+mov AX,%001
+mov DX,1
+mov CX,1
+Otro: sys 1
+cmp [1],0
+jn sigue
+add [2],[1]
+add FX,1
 jmp otro
-fin: stop
+sigue: cmp 0,FX
+jz fin
+div [2],FX
+fin: mov DX,2
+sys 2
+stop
+
