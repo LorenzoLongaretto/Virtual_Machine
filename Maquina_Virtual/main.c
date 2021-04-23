@@ -119,12 +119,14 @@ if(!error){
 
 int main(int argc, char *argv[])
 {
-
     int32_t memoria[4096];
     char v_mnemonics[24][5], v_registers[16][3];
-    create_mnemonics(v_mnemonics);
-    create_registers(v_registers);
-    load_register(memoria,v_mnemonics,v_registers,argv);
+    if(argc>1){
+        create_mnemonics(v_mnemonics);
+        create_registers(v_registers);
+        load_register(memoria,v_mnemonics,v_registers,argv);
+    }
+    else
+        printf("Ingrese nombre del archivo a leer y nombre del arch a crear");
     return 0;
-
 }
