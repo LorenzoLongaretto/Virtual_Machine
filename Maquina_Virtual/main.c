@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "traductor.h"
 #include<ctype.h>
-
+int o;
 void create_arch(int32_t memoria[],int N,char *filename){
 int i;
 FILE *arch;
@@ -14,6 +14,14 @@ for (i=0;i<N;i++){
 }
 fclose(arch);
 
+}
+int seekFlag(char* flag,char *aux[],int argc){
+    int i;
+    for(i=0;i<argc;i++){
+        if(strcmp(flag,aux[i])==0)
+            return 1;
+    }
+    return 0;
 }
 
 void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char *argv[]){
@@ -89,7 +97,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     memoria[lineaActual]=0xFFFFFFFF;//no ha menem
                     error=1;
                 }
-                if(strcmp(argv[3],"-o")!=0){
+                if(o==0){//si no esta el comando -o entra
                     if (firstword[0]=='\0')
                         if(comentario[0]=='\0')
                             printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
@@ -105,8 +113,8 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                 }
             }
             else
-                if(strcmp(argv[3],"-o")!=0)
-                printf("%s",auxline);
+                if(o==0)
+                    printf("%s",auxline);
         }
     }
     fclose(arch);
@@ -121,6 +129,7 @@ int main(int argc, char *argv[])
 {
     int32_t memoria[4096];
     char v_mnemonics[24][5], v_registers[16][3];
+    o=seekFlag("-o",argv,argc);
     if(argc>1){
         create_mnemonics(v_mnemonics);
         create_registers(v_registers);

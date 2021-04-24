@@ -1,19 +1,21 @@
-;ejercicio1---------------------------
-xor FX,FX
-mov [2],0
-mov AX,%001
+;Prueba aritmética
+Mov [1],'4'  ; guarda caracter
+mov [2],%4E  ;guarda hexa
+MOV [3],@4   ;guarda octal
+mov [4],#390 ;guarda decimal
+mov AX,%A
+mov BX,7
+shr AX,1
+shl BX,1
+mov cx,69
+swap ax,BX
+add [1],AX
+sub [2],BX
+mul [3],AX
+add [3],cx
+div [4],BX
+mov AX,%10
+mov CX,4
 mov DX,1
-mov CX,1
-Otro: sys 1
-cmp [1],0
-jn sigue
-add [2],[1]
-add FX,1
-jmp otro
-sigue: cmp 0,FX
-jz fin
-div [2],FX
-fin: mov DX,2
-sys 2
-stop
-
+SYS 2
+;Espero que salga BIEN ;)
