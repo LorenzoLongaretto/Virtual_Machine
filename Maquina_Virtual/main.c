@@ -27,7 +27,6 @@ int seekFlag(char* flag,char *aux[],int argc){
 void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char *argv[]){
     FILE *arch;
     TLista L=NULL;
-    float flot;
     int lineaActual=0,error=0,tipo1,tipo2,warningcont=0;;
     char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t salida1,salida2;
@@ -122,6 +121,8 @@ if(warningcont!=0)
     printf("hay %d warnings",warningcont);
 if(!error){
     create_arch(memoria,lineaActual,argv[2]);
+}else{
+    printf("No se creo el archivo ya que hubo errores");
 }
 }
 
@@ -130,7 +131,7 @@ int main(int argc, char *argv[])
     int32_t memoria[4096];
     char v_mnemonics[24][5], v_registers[16][3];
     o=seekFlag("-o",argv,argc);
-    if(argc>1){
+    if(argc>2){
         create_mnemonics(v_mnemonics);
         create_registers(v_registers);
         load_register(memoria,v_mnemonics,v_registers,argv);

@@ -150,3 +150,20 @@
 	"traductor.h"
 	<ctype.h>
 
+1619381027 source:c:\users\chalo\documents\github\virtual_machine\maquina_virtual\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	"traductor.h"
+	<ctype.h>
+
+1619381769 c:\users\chalo\documents\github\virtual_machine\maquina_virtual\traductor.h
+
+1619381520 source:c:\users\chalo\documents\github\virtual_machine\maquina_virtual\traductor.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"traductor.h"
+	<ctype.h>
+
