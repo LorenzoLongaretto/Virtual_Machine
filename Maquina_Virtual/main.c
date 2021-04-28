@@ -63,7 +63,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                 strcpy(second_arg,"NULL");
                 change_char(auxline);
                 sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);
-                strupr(mnem);strupr(first_arg);strupr(second_arg);
+                strupr(mnem);/*strupr(first_arg);strupr(second_arg);*/
                 if (find_nmemonic(mnem,v_mnemonics)!=-1){
                     if(strcmp(second_arg,"NULL")!=0){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;

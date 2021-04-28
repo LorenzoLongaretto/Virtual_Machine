@@ -172,7 +172,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
         }
     }
     else{
-        if (is_register(aux,v_registers)){//OPERANDO REGISTRO
+        if (is_register(strupr(aux),v_registers)){//OPERANDO REGISTRO
             *tipo=1;
             *salida=find_register(aux,v_registers);
         }
@@ -180,7 +180,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
             if (ARG[0]=='['){ //OPERANDO DIRECTO
                 *tipo=2;
                 switch (ARG[1]){
-                case '‘':
+                case '\‘':
                    //ACII
                    *salida=ARG[1];
                     break;
