@@ -153,6 +153,9 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
         switch (ARG[0]){//Lo pasamos a binario
                 case '\'':
                    //ACII
+                   if(ARG[1]==NULL)
+                    *salida=32;// ESPACIO
+                   else
                    *salida=ARG[1];
                     break;
                 case '@':
