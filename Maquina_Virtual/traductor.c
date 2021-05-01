@@ -197,6 +197,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                 }
             }
             else{//es rotulo
+                strupr(ARG);
                 *tipo=0;
                 *salida=find_label(L_label,ARG);
                 if(*salida==0x00000FFF)
