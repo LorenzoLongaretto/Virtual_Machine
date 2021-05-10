@@ -40,7 +40,13 @@ int i;
     for (i=0;i<16;i++)
         strcpy(vec[i],"");
     strcpy(vec[0],"DS");
+    strcpy(vec[1],"SS");
+    strcpy(vec[2],"ES");
+    strcpy(vec[3],"CS");
+    strcpy(vec[4],"HP");
     strcpy(vec[5],"IP");
+    strcpy(vec[6],"SP");
+    strcpy(vec[7],"BP");
     strcpy(vec[8],"CC");
     strcpy(vec[9],"AC");
     strcpy(vec[10],"AX");
@@ -126,14 +132,13 @@ int size=strlen(str), i=0;
 void clean_arg(char str[], char aux[]){//Entra str y devuelve un aux solo con el numero
 int i=0,j=0;
     while(str[i]!='\0'){
-        if((str[i]>='0' && str[i]<='9'||str[i]=='-') || isalpha(str[i]) || str[i]=='\''){
+        if((str[i]>='0' && str[i]<='9'||str[i]=='-'||str[i]=='+') || isalpha(str[i]) || str[i]=='\''){
             aux[j]=str[i];
             aux[j+1]='\0';
             j++;
         }
         i++;
     }
-
 }
 
 int find_label(TLista L,char x[]){
@@ -144,67 +149,76 @@ while (L!=NULL){
 }
 return 0x00000FFF;
 }
-
 void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[]){
-    char aux[10];
+    char aux[10],offset[10];
     clean_arg(ARG,aux);
     if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-'){//OPERANDO INMEDIATO
         *tipo=0;
         switch (ARG[0]){//Lo pasamos a binario
-                case '\'':
-                   //ACII
+                case '\'': //ASCII
                    if(ARG[1]==NULL)
                     *salida=32;// ESPACIO
                    else
                    *salida=ARG[1];
                     break;
-                case '@':
-                    //octal
+                case '@'://octal
                     *salida=strtoul(aux,NULL,8);
                     break;
-                case '%':
-                    //hexa
+                case '%'://hexa
                     *salida=strtoul(aux,NULL,16);
                     break;
-                default:
-                    //decimal
+                default://decimal
                     *salida=strtoul(aux,NULL,10);
         }
     }
     else{
-        if (is_register(strupr(aux),v_registers)){//OPERANDO REGISTRO
-            *tipo=1;
-            *salida=find_register(aux,v_registers);
-        }
-        else{
-            if (ARG[0]=='['){ //OPERANDO DIRECTO
+        if (ARG[0]=='[' ){ //OPERANDO DIRECTO
+            if((ARG[1]>='0' && ARG[1]<='9')){
                 *tipo=2;
                 switch (ARG[1]){
-                case '\‘':
-                   //ACII
+                case '\‘': //ASCII
                    *salida=ARG[1];
                     break;
                 case '@':
                     *salida=strtoul(aux,NULL,8);
                     break;
-                case '%':
-                    //hexa
+                case '%': //hexa
                     *salida=strtoul(aux,NULL,16);
                     break;
-                default:
-                    //decimal
+                default://decimal
                     *salida=strtoul(aux,NULL,10);
                 }
             }
-            else{//es rotulo
-                strupr(ARG);
-                *tipo=0;
-                *salida=find_label(L_label,ARG);
-                if(*salida==0x00000FFF)
-                    *error=1;
-            }
+            else{//OPERANDO INDIRECTO
+                if (ARG[0]=='['&& (ARG[1]>='A' && ARG[1]<='z')){
+                    offset[0]='\0';
+                    //si offset es alfa hay que buscar en la lista de ctes
+                    if(strchr(aux,'+'))
+                        strcpy(offset,strchr(aux,'+'));
+                    if(strchr(aux,'-'))
+                        strcpy(offset,strchr(aux,'-'));
+                    strcpy(aux,strtok(aux,"+-"));
+                    if(offset[0]!='\0')
+                        *salida=(strtoul(offset,NULL,10))<<4;
+                    if (is_register(strupr(aux),v_registers)){
+                        *tipo=3;
+                        *salida|=find_register(aux,v_registers);
+                    }
+                }
+                else{//OPERANDO REGISTRO
+                 if (is_register(strupr(aux),v_registers)){
+                    *tipo=1;
+                    *salida=find_register(aux,v_registers);
+                }
+                 else{//es rotulo
+                    strupr(ARG);
+                    *tipo=0;
+                    *salida=find_label(L_label,ARG);
+                    if(*salida==0x00000FFF)
+                        *error=1;
+                }
+               }
         }
-
     }
+  }
 }
-

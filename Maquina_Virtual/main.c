@@ -130,7 +130,10 @@ int main(int argc, char *argv[])
 {
     int32_t memoria[4096];
     char v_mnemonics[24][5], v_registers[16][3];
-    o=seekFlag("-o",argv,argc);
+    argc=4;
+    argv[1]="prueba.txt";
+    argv[2]="prueba.bin";
+    //o=seekFlag("-o",argv,argc);
     if(argc>2){
         create_mnemonics(v_mnemonics);
         create_registers(v_registers);
