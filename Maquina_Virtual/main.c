@@ -54,6 +54,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     sscanf(auxline,"%s %s %s",nom,equ,valor);
                     strupr(equ);
                     if(strcmp(equ,"EQU")==0){
+                        strupr(nom);
                         add_const(&LC,nom,valor);
                     }
             lineaActual++;

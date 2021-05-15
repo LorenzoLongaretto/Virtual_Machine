@@ -1,6 +1,6 @@
 ;Prueba aritmética
-CTE equ 10
-Mov [CTE],'4'
+CTe equ 10
+Mov [CTE], '4'
 mov [cte],%4E
 MOV [bx-2],@4
 mov [4],#390

@@ -69,7 +69,13 @@ int is_mnemonic(char string[], char v_mnemonics[24][5]){
 int is_label(char string[]){
     return (string[strlen(string)-1]==':');
 }
+int is_cte(char string[],TListaC L){
 
+while((L!=NULL && strcmp(L->name,string)!=0)){
+    L=L->sig;
+}
+        return L!=NULL;
+}
 int valid_line(char string[]){    // string[] es la cadena completa de la linea del archivo
 char aux[100];
     sscanf(string,"%s",aux);//leo el primer string de toda la cadena
@@ -189,7 +195,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
     }
     else{
         if (ARG[0]=='[' ){ //OPERANDO DIRECTO
-            if((ARG[1]>='0' && ARG[1]<='9')|| !is_register(aux,v_registers)){
+            if((ARG[1]>='0' && ARG[1]<='9')|| is_cte(aux,L_const)){
                 *tipo=2;
                 switch (ARG[1]){
                 case '\‘': //ASCII
@@ -222,7 +228,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                     strcpy(aux,strtok(aux,"+-"));
 
                     if(offset[0]!='\0')
-                        if(!isalpha(aux[0]))
+                        if(offset[1]>='0' &&offset[1]<='9')
                             *salida=(strtoul(offset,NULL,10))<<4;
                         else
                             *salida = find_const(aux,L_const,lineaString)<<4;
@@ -256,11 +262,10 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
   }
 }
 
+
 int find_const(char ARG[],TListaC L_const,int *lineaString){
 int salida;
-char aux[4];
-clean_arg(L_const->name,aux);
-while(L_const!=NULL && strcmp(ARG,aux)==0){
+while(L_const!=NULL && strcmp(ARG,L_const->name)!=0){
     L_const=L_const->sig;
 }
         if(L_const!=NULL){
