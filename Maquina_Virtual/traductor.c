@@ -107,6 +107,16 @@ void add_label(TLista *L, char x[],int actual_line){//Inserta al final
     *L=aux;
 }
 
+void add_const(TListaC *LC,char name[],char value[]){
+    TListaC aux;
+    aux=(TListaC)malloc(sizeof(nodoC));
+    strcpy(aux->value,value);
+    aux->sig=NULL;
+    strcpy(aux->name,name);
+    aux->sig=*L;
+    *L=aux;
+}
+
 int is_register(char x[],char v_registers[][3]){
 int i=0;
     while (i<16 && strcmp(x,v_registers[i])!=0)
@@ -149,7 +159,7 @@ while (L!=NULL){
 }
 return 0x00000FFF;
 }
-void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[]){
+void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC *L_const,int *lineaString){
     char aux[10],offset[10];
     clean_arg(ARG,aux);
     if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-'){//OPERANDO INMEDIATO
@@ -215,10 +225,55 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                     *tipo=0;
                     *salida=find_label(L_label,ARG);
                     if(*salida==0x00000FFF)
+                    // agregar busqueda de constante
+                    {
+                        *tipo=2;
+                        if(ARG[0]!='"')
+                            *tipo = 0;
+
+                       *salida = find_const(ARG,L_const,lineaString);
+                    if(*salida==0x00000FFF)
                         *error=1;
+                    }
+
                 }
                }
+
         }
     }
   }
+}
+
+int find_const(char ARG[],TListaC *L_const,int *lineaString){
+
+TListaC aux = *(L_const);
+while(aux!=NULL && strcmp(ARG,aux->name)){
+
+    aux=aux->sig;
+}
+        if(aux!=NULL){
+            switch (ARG[0]){//Lo pasamos a binario
+                         case '"':  //String
+                        salida = lineaString;
+                        *lineaString+=strlen(aux->value)
+                        break;
+                         case '\'': //ASCII
+                           if(ARG[1]==NULL)
+                            salida=32;// ESPACIO
+                           else
+                           salida=ARG[1];
+                            break;
+                        case '@'://octal
+                            salida=strtoul(aux,NULL,8);
+                            break;
+                        case '%'://hexa
+                            salida=strtoul(aux,NULL,16);
+                            break;
+                        default://decimal
+                            salida=strtoul(aux,NULL,10);
+                   }
+                 }
+        else
+           salida = 0x00000FFF;
+    return salida;
 }

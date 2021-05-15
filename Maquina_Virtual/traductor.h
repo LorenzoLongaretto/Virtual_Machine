@@ -5,6 +5,13 @@ typedef struct nodo{
 }nodo;
 typedef nodo* TLista;
 
+typedef struct nodoC{
+    char name[10];
+    char value[10];
+     struct nodoC *sig;
+}nodoC;
+typedef nodoC* TListaC;
+
 void create_mnemonics(char v_mnemonics[24][5]);
 
 void create_registers(char vec[16][3]);
@@ -31,4 +38,5 @@ void clean_arg(char str[], char aux[]);
 
 int find_label(TLista L,char x[]);
 
-void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[]);
+void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC *L_const,int *lineaString);
+int find_const(char ARG[],TListaC *L_const,int *lineaString);
