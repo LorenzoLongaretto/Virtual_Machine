@@ -1,6 +1,7 @@
 ;Prueba aritmética
-Mov [ax],'4'
-mov [2],%4E
+CTE equ 10
+Mov [CTE],'4'
+mov [cte],%4E
 MOV [bx-2],@4
 mov [4],#390
 mov AX,%A

@@ -23,13 +23,19 @@ int seekFlag(char* flag,char *aux[],int argc){
     }
     return 0;
 }
+void muestraL(TListaC L){
+while(L!=NULL){
+    printf("%s %s\n",L->name,L->value);
+    L=L->sig;
+}
+}
 
 void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char *argv[]){
     FILE *arch;
     TLista L=NULL;
     TListaC LC=NULL;
-    int lineaActual=0,error=0,tipo1,tipo2,warningcont=0;lineaString;
-    char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10],nom[10],equ[10],valor[10];//finalLine es la linea sin rotulo ni comentarios
+    int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString;
+    char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10],nom[10],equ[10],valor[10],auxcte[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t salida1,salida2;
     char comentario[100];
     arch=fopen(filename,"rt");
@@ -46,26 +52,15 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                 }
                 else{    // Constante
                     sscanf(auxline,"%s %s %s",nom,equ,valor);
-                strupr(equ);
-                if(strcmp(equ,"EQU")){
-                    add_const(&LC,nom,valor);
-                }
+                    strupr(equ);
+                    if(strcmp(equ,"EQU")==0){
+                        add_const(&LC,nom,valor);
+                    }
             lineaActual++;
             }
         }
-        /*
-        // Constantes
-        rewind(arch);
-        while (fgets(auxline,100,arch)!=NULL){
-            if(valid_line(auxline)){
-                sscanf(auxline,"%s %s %s",nom,equ,valor);
-                strupr(equ);
-                if(strcmp(equ,"EQU")){
-                    add_const(&LC,nom,valor);
-                }
-            }
         }
-        */
+        muestraL(LC);
         lineaString = lineaActual;
         //Traduccion
         rewind(arch);
@@ -86,12 +81,13 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                 strcpy(second_arg,"NULL");
                 change_char(auxline);
                 sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);
+                strcpy(auxcte,second_arg); strupr(auxcte);
                 strupr(mnem);/*strupr(first_arg);strupr(second_arg);*/
-                if (find_nmemonic(mnem,v_mnemonics)!=-1){
+                if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0){
                     if(strcmp(second_arg,"NULL")!=0){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
-                        opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,&LC,&lineaString);
-                        opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers,&LC,&lineaString);
+                        opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString);
+                        opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers,LC,&lineaString);
                         if(salida1>0x00000FFF) //WARNING
                             warningcont+=1;
                         if(salida2>0x00000FFF)
@@ -149,6 +145,7 @@ if(!error){
 }
 }
 
+
 int main(int argc, char *argv[])
 {
     int32_t memoria[4096];
@@ -166,3 +163,4 @@ int main(int argc, char *argv[])
         printf("Ingrese nombre del archivo a leer y nombre del arch a crear");
     return 0;
 }
+
