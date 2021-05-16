@@ -144,9 +144,9 @@ int size=strlen(str), i=0;
     if(i<size)
         str[i]=' ';
 }
-void  clean_sign(char * string,char* aux){
-
-for(int i=1;i<strlen(string);i++){
+void  clean_sign(char *string,char* aux){
+int i;
+for(i=1;i<=strlen(string);i++){
         aux[i-1]=string[i];
 
 }
@@ -238,8 +238,10 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                     if(offset[0]!='\0')
                         if(offset[1]>='0' &&offset[1]<='9')
                             *salida=(strtoul(offset,NULL,10))<<4;
-                        else{
+                        else{  // es constante
+                             clean_offset[0]='\0';
                             clean_sign(offset,clean_offset);
+                            strupr(clean_offset);
                             if(offset[0]='-')
                                 *salida = (-1*find_const(clean_offset,L_const,lineaString))<<4;
                             else
