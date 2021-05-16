@@ -8,7 +8,7 @@ int o;
 void create_arch(int32_t memoria[],int N,char *filename){
 int i;
 FILE *arch;
-arch=fopen(filename,"wb");
+arch=fopen("prueba.bin","wb");
 for (i=0;i<N;i++){
     fwrite(&memoria[i],sizeof(memoria[i]),1,arch);
 }
@@ -34,11 +34,11 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
     FILE *arch;
     TLista L=NULL;
     TListaC LC=NULL;
-    int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString;
+    int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0;
     char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10],nom[10],equ[10],valor[10],auxcte[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t salida1,salida2;
     char comentario[100];
-    arch=fopen(filename,"rt");
+    arch=fopen("prueba.txt","rt");
     if(arch!=NULL){
         lineaActual=0;
         // Rotulos y Constantes
@@ -54,11 +54,15 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     sscanf(auxline,"%s %s %s",nom,equ,valor);
                     strupr(equ);
                     if(strcmp(equ,"EQU")==0){
-                        strupr(nom);
+                            cte=1;
                         add_const(&LC,nom,valor);
                     }
-            lineaActual++;
+
             }
+            if(cte!=1)
+            lineaActual++;
+
+            cte=0;
         }
         }
         muestraL(LC);
@@ -136,6 +140,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     printf("%s",auxline);
         }
     }
+    printf("%d",lineaString);
     fclose(arch);
 if(warningcont!=0)
     printf("hay %d warnings",warningcont);
@@ -151,17 +156,17 @@ int main(int argc, char *argv[])
 {
     int32_t memoria[4096];
     char v_mnemonics[24][5], v_registers[16][3];
-    argc=4;
-    argv[1]="prueba.txt";
-    argv[2]="prueba.bin";
+    //argc=4;
+    //argv[1]="prueba.txt";
+    //argv[2]="prueba.bin";
     //o=seekFlag("-o",argv,argc);
-    if(argc>2){
+    //if(argc>2){
         create_mnemonics(v_mnemonics);
         create_registers(v_registers);
         load_register(memoria,v_mnemonics,v_registers,argv);
-    }
-    else
-        printf("Ingrese nombre del archivo a leer y nombre del arch a crear");
+    //}
+    //else
+      //  printf("Ingrese nombre del archivo a leer y nombre del arch a crear");
     return 0;
 }
 

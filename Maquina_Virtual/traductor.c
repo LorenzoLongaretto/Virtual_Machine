@@ -144,6 +144,14 @@ int size=strlen(str), i=0;
     if(i<size)
         str[i]=' ';
 }
+void  clean_sign(char * string,char* aux){
+
+for(int i=1;i<strlen(string);i++){
+        aux[i-1]=string[i];
+
+}
+
+}
 
 void clean_arg(char str[], char aux[]){//Entra str y devuelve un aux solo con el numero
 int i=0,j=0;
@@ -166,7 +174,7 @@ while (L!=NULL){
 return 0x00000FFF;
 }
 void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC L_const,int *lineaString){
-    char aux[10],offset[10];
+    char aux[10],offset[10],clean_offset[10];
     clean_arg(ARG,aux);
     if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-'){//OPERANDO INMEDIATO
         *tipo=0;
@@ -230,8 +238,14 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                     if(offset[0]!='\0')
                         if(offset[1]>='0' &&offset[1]<='9')
                             *salida=(strtoul(offset,NULL,10))<<4;
-                        else
-                            *salida = find_const(aux,L_const,lineaString)<<4;
+                        else{
+                            clean_sign(offset,clean_offset);
+                            if(offset[0]='-')
+                                *salida = (-1*find_const(clean_offset,L_const,lineaString))<<4;
+                            else
+                                *salida = find_const(clean_offset,L_const,lineaString)<<4;
+                        }
+
                     if (is_register(strupr(aux),v_registers)){
                         *tipo=3;
                         *salida|=find_register(aux,v_registers);
@@ -269,16 +283,16 @@ while(L_const!=NULL && strcmp(ARG,L_const->name)!=0){
     L_const=L_const->sig;
 }
         if(L_const!=NULL){
-            switch (ARG[0]){//Lo pasamos a binario
+            switch (L_const->value[0]){//Lo pasamos a binario
                          case '"':  //String
-                        salida = lineaString;
+                        salida = *lineaString;
                         *lineaString+=strlen(L_const->value);
                         break;
                          case '\'': //ASCII
-                           if(ARG[1]==NULL)
+                           if(L_const->value[1]==NULL)
                             salida=32;// ESPACIO
                            else
-                           salida=ARG[1];
+                           salida=L_const->value[1];
                             break;
                         case '@'://octal
                             salida=strtoul(L_const->value,NULL,8);
