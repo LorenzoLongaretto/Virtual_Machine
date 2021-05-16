@@ -140,7 +140,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     printf("%s",auxline);
         }
     }
-    printf("%d",lineaString);
+    //printf("%d\n",lineaString);
     fclose(arch);
 if(warningcont!=0)
     printf("hay %d warnings",warningcont);
@@ -154,8 +154,8 @@ if(!error){
 
 int main(int argc, char *argv[])
 {
-    int32_t memoria[4096];
-    char v_mnemonics[24][5], v_registers[16][3];
+    int32_t memoria[8192];
+    char v_mnemonics[4081][5], v_registers[16][3];
     //argc=4;
     //argv[1]="prueba.txt";
     //argv[2]="prueba.bin";

@@ -20,6 +20,11 @@ int i;
     strcpy(v_mnemonics[9],"AND");
     strcpy(v_mnemonics[10],"OR");
     strcpy(v_mnemonics[11],"XOR");
+    //Funciones String
+    strcpy(v_mnemonics[13],"SMOV");
+    strcpy(v_mnemonics[12],"SLEN");
+    strcpy(v_mnemonics[14],"SCMP");
+
     strcpy(v_mnemonics[240],"SYS");//1 operando
     strcpy(v_mnemonics[241],"JMP");
     strcpy(v_mnemonics[242],"JZ");
@@ -32,9 +37,14 @@ int i;
     strcpy(v_mnemonics[249],"LDH");
     strcpy(v_mnemonics[250],"RND");
     strcpy(v_mnemonics[251],"NOT");
-    strcpy(v_mnemonics[252],"STOP");//0 operando
-}
+    //Funciones Pila
+    strcpy(v_mnemonics[252],"PUSH");
+    strcpy(v_mnemonics[253],"POP");
+    strcpy(v_mnemonics[254],"CALL");
+    strcpy(v_mnemonics[4080],"RET"); // 0 operando
 
+    strcpy(v_mnemonics[4081],"STOP");
+}
 void create_registers(char vec[16][3]){
 int i;
     for (i=0;i<16;i++)
@@ -203,7 +213,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
     }
     else{
         if (ARG[0]=='[' ){ //OPERANDO DIRECTO
-            if((ARG[1]>='0' && ARG[1]<='9')|| is_cte(aux,L_const)){
+            if((ARG[1]>='0' && ARG[1]<='9')|| is_cte(strupr(aux),L_const)){
                 *tipo=2;
                 switch (ARG[1]){
                 case '\‘': //ASCII
@@ -242,7 +252,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                              clean_offset[0]='\0';
                             clean_sign(offset,clean_offset);
                             strupr(clean_offset);
-                            if(offset[0]='-')
+                            if(offset[0]=='-')
                                 *salida = (-1*find_const(clean_offset,L_const,lineaString))<<4;
                             else
                                 *salida = find_const(clean_offset,L_const,lineaString)<<4;
@@ -288,7 +298,7 @@ while(L_const!=NULL && strcmp(ARG,L_const->name)!=0){
             switch (L_const->value[0]){//Lo pasamos a binario
                          case '"':  //String
                         salida = *lineaString;
-                        *lineaString+=strlen(L_const->value);
+                        *lineaString+=strlen(L_const->value)-1;
                         break;
                          case '\'': //ASCII
                            if(L_const->value[1]==NULL)
