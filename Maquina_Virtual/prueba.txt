@@ -1,9 +1,9 @@
 ;Prueba aritmética
-CTE equ 3
+CTE equ "hola"
 Mov [CTE], '4'
 mov [cte],%4E
 MOV [bx+cte],@4
-mov [4],#390
+mov [CTE],#390
 mov AX,%A
 mov BX,7
 shr AX,1

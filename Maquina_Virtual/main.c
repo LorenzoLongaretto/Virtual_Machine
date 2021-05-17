@@ -91,8 +91,8 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                 if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0){
                     if(strcmp(second_arg,"NULL")!=0){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
-                        opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString);
-                        opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers,LC,&lineaString);
+                        opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,&LC,&lineaString);
+                        opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers,&LC,&lineaString);
                         if(salida1>0x00000FFF) //WARNING
                             warningcont+=1;
                         if(salida2>0x00000FFF)

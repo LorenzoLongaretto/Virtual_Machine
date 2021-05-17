@@ -103,16 +103,16 @@
 
 1618152097 c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\instrucciones.h
 
-1621192695 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.c
+1621211921 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"traductor.h"
 	<ctype.h>
 
-1621114116 c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.h
+1621208257 c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.h
 
-1621192489 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\main.c
+1621208300 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
