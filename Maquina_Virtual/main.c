@@ -104,7 +104,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
 
                     }
                     else{
-                        if(strcmp(first_arg,"NULL")!=0){
+                        if(strcmp(first_arg,"NULL")!=0 && strcmp(auxcte,"EQU")!=0){
                             memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
                             opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString,&primera);
                             if(salida1>0x0000FFFF) //WARNING
@@ -117,8 +117,10 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     }
                 }
                 else{
-                    memoria[lineaActual]=0xFFFFFFFF;//no ha menem
-                    error=1;
+                    if(strcmp(auxcte,"EQU")!=0){
+                        memoria[lineaActual]=0xFFFFFFFF;//no ha menem
+                        error=1;
+                    }
                 }
                 if(o==0){//si no esta el comando -o entra
                     if(strcmp(auxcte,"EQU")!=0){
@@ -146,10 +148,12 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
     }
     //printf("%d\n",lineaString);
     fclose(arch);
+    load_cte_string(LC,memoria);
 if(warningcont!=0)
     printf("hay %d warnings",warningcont);
 if(!error){
     create_arch(memoria,lineaActual,argv[2]);
+    printf("Creacion exitosa");
 }else{
     printf("No se creo el archivo ya que hubo errores");
 }

@@ -1,7 +1,7 @@
 ;Prueba aritmética
-CTE equ 10
 CTEE equ "asdg"
 const equ "hola"
+CTE equ 10
 Mov CTE, '4'
 mov [ctee],%4E
 MOV [bx+ctee],@4

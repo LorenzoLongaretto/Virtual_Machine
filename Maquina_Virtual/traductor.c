@@ -343,3 +343,22 @@ while(L!=NULL && strcmp(ARG,(L)->name)!=0){
            salida = 0x00000FFF;
     return salida;
 }
+void load_cte_string(TListaC L,int memoria[]){
+char aux[10];
+int i;
+while(L!=NULL){
+    if(L->value[0]=='"'){
+        clean_string(L->value,aux);
+        for(i=0;i<=strlen(aux);i++){
+            memoria[L->used+i]=aux[i];
+           // printf("%c \n",memoria[L->used+i]);
+        }
+
+    }
+ L=L->sig;
+}
+
+}
+
+
+
