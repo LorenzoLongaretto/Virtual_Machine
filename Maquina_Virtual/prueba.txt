@@ -1,9 +1,9 @@
 ;Prueba aritmética
-CTE equ 2
-CTEE equ 3
-Mov [CTEE], '4'
+CTE equ "hola"
+;CTEE equ "casa"
+Mov [CTE], '4'
 mov [ctee],%4E
-MOV [bx-ctee],@4
+MOV [bx+ctee],@4
 mov [CTE],#39
 mov AX,%A
 mov BX,7

@@ -39,5 +39,5 @@ void clean_arg(char str[], char aux[]);
 
 int find_label(TLista L,char x[]);
 
-void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC *L_const,int *lineaString,int *primera);
-int find_const(char ARG[],TListaC *L_const,int *lineaString,int *primera);
+void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC L_const,int *lineaString,int *primera);
+int find_const(char ARG[],TListaC L_const,int *lineaString,int *primera);

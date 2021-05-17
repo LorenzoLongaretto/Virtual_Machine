@@ -91,8 +91,8 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                 if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0){
                     if(strcmp(second_arg,"NULL")!=0){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
-                        opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,&LC,&lineaString,&primera);
-                        opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers,&LC,&lineaString,&primera);
+                        opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString,&primera);
+                        opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers,LC,&lineaString,&primera);
                         if(salida1>0x00000FFF) //WARNING
                             warningcont+=1;
                         if(salida2>0x00000FFF)
@@ -106,7 +106,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     else{
                         if(strcmp(first_arg,"NULL")!=0){
                             memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
-                            opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,&LC,&lineaString,&primera);
+                            opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString,&primera);
                             if(salida1>0x0000FFFF) //WARNING
                             warningcont+=1;
                             memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando

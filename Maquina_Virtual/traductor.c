@@ -184,7 +184,7 @@ while (L!=NULL){
 }
 return 0x00000FFF;
 }
-void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC *L_const,int *lineaString,int *primera){
+void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC L_const,int *lineaString,int *primera){
     char aux[10],offset[10],clean_offset[10];
     clean_arg(ARG,aux);
     if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-'){//OPERANDO INMEDIATO
@@ -213,7 +213,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
         }
     }
     else{
-        if (ARG[0]=='[' && ((ARG[1]>='0' && ARG[1]<='9') || is_cte(strupr(aux),*L_const)==1)){ //OPERANDO DIRECTO
+        if (ARG[0]=='[' && ((ARG[1]>='0' && ARG[1]<='9') || is_cte(strupr(aux),L_const)==1)){ //OPERANDO DIRECTO
 
                 *tipo=2;
                 switch (ARG[1]){
@@ -291,45 +291,45 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
 }
 
 
-int find_const(char ARG[],TListaC *L_const,int *lineaString,int *primera){
+int find_const(char ARG[],TListaC L_const,int *lineaString,int *primera){
 int salida;
 
-while(*L_const!=NULL && strcmp(ARG,(*L_const)->name)!=0){
-    *L_const=(*L_const)->sig;
+while(L_const!=NULL && strcmp(ARG,(L_const)->name)!=0){
+    L_const=(L_const)->sig;
 }
-        if(*L_const!=NULL){
-            switch ((*L_const)->value[0]){//Lo pasamos a binario
+        if(L_const!=NULL){
+            switch ((L_const)->value[0]){//Lo pasamos a binario
                          case '"':  //String
                        if(*primera > 0){
-                                 if((*L_const)->used > 0)
-                                    salida = (*L_const)->used;
+                                 if((L_const)->used > 0)
+                                    salida = (L_const)->used;
                                 else{
-                                    *lineaString+=strlen((*L_const)->value)-1;
+                                    *lineaString+=strlen((L_const)->value)-1;
                                     salida=*lineaString;
-                                    (*L_const)->used=*lineaString;
+                                    (L_const)->used=*lineaString;
                              }
 
                         }
                         else{
                             salida =*lineaString;
-                            (*L_const)->used=*lineaString;
+                            (L_const)->used=*lineaString;
                             *primera=1;
                         }
                         break;
                          case '\'': //ASCII
-                           if((*L_const)->value[1]==NULL)
+                           if((L_const)->value[1]==NULL)
                             salida=32;// ESPACIO
                            else
-                           salida=(*L_const)->value[1];
+                           salida=(L_const)->value[1];
                             break;
                         case '@'://octal
-                            salida=strtoul((*L_const)->value,NULL,8);
+                            salida=strtoul((L_const)->value,NULL,8);
                             break;
                         case '%'://hexa
-                            salida=strtoul((*L_const)->value,NULL,16);
+                            salida=strtoul((L_const)->value,NULL,16);
                             break;
                         default://decimal
-                            salida=strtoul((*L_const)->value,NULL,10);
+                            salida=strtoul((L_const)->value,NULL,10);
                    }
         }
         else
