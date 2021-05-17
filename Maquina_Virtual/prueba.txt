@@ -1,10 +1,11 @@
 ;Prueba aritmética
-CTE equ "hola"
-;CTEE equ "casa"
-Mov [CTE], '4'
+CTE equ 10
+CTEE equ "asdg"
+const equ "hola"
+Mov CTE, '4'
 mov [ctee],%4E
 MOV [bx+ctee],@4
-mov [CTE],#39
+mov [const],#39
 mov AX,%A
 mov BX,7
 shr AX,1

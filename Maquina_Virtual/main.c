@@ -55,7 +55,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     strupr(equ);
                     if(strcmp(equ,"EQU")==0){
                             cte=1;
-                        add_const(&LC,nom,valor);
+                        add_const(&LC,strupr(nom),valor);
                     }
 
             }
@@ -86,7 +86,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                 strcpy(second_arg,"NULL");
                 change_char(auxline);
                 sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);
-                strcpy(auxcte,second_arg); strupr(auxcte);
+                strcpy(auxcte,first_arg); strupr(auxcte);
                 strupr(mnem);/*strupr(first_arg);strupr(second_arg);*/
                 if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0){
                     if(strcmp(second_arg,"NULL")!=0){
@@ -121,6 +121,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     error=1;
                 }
                 if(o==0){//si no esta el comando -o entra
+                    if(strcmp(auxcte,"EQU")!=0){
                     if (firstword[0]=='\0')
                         if(comentario[0]=='\0')
                             printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
@@ -133,6 +134,9 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                         else
                             printf("[%04d]: %02X %02X %02X %02X\t%s\t%s\t%s",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline,comentario);
                     lineaActual++;
+                    }
+                    else
+                        printf("%s\n",auxline);
                 }
             }
             else
