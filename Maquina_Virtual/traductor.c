@@ -236,6 +236,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                     }
                 }
             }
+        }
             else{//OPERANDO INDIRECTO
                 if (ARG[0]=='['&& (ARG[1]>='A' && ARG[1]<='z')){
                     offset[0]='\0';
@@ -284,7 +285,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
 
                 }
                }
-        }
+
     }
   }
 }
