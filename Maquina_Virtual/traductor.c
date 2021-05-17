@@ -184,7 +184,7 @@ while (L!=NULL){
 }
 return 0x00000FFF;
 }
-void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC *L_const,int *lineaString){
+void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC *L_const,int *lineaString,int *primera){
     char aux[10],offset[10],clean_offset[10];
     clean_arg(ARG,aux);
     if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-'){//OPERANDO INMEDIATO
@@ -205,7 +205,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                 default://decimal
                     {
                     if(isalpha(ARG[0])){
-                        *salida = find_const(ARG,L_const,lineaString);
+                        *salida = find_const(ARG,L_const,lineaString,primera);
                     }
                     else // es decimal
                        *salida=strtoul(aux,NULL,10);
@@ -213,8 +213,8 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
         }
     }
     else{
-        if (ARG[0]=='[' ){ //OPERANDO DIRECTO
-            if((ARG[1]>='0' && ARG[1]<='9')|| is_cte(strupr(aux),*L_const)){
+        if (ARG[0]=='[' && ((ARG[1]>='0' && ARG[1]<='9') || is_cte(strupr(aux),*L_const)==1)){ //OPERANDO DIRECTO
+
                 *tipo=2;
                 switch (ARG[1]){
                 case '\‘': //ASCII
@@ -229,13 +229,13 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                 default://decimal
                      {
                     if(isalpha(ARG[1])){
-                        *salida = find_const(aux,L_const,lineaString);
+                        *salida = find_const(aux,L_const,lineaString,primera);
                     }
                     else // es decimal
                        *salida=strtoul(aux,NULL,10);
                     }
                 }
-            }
+
         }
             else{//OPERANDO INDIRECTO
                 if (ARG[0]=='['&& (ARG[1]>='A' && ARG[1]<='z')){
@@ -255,9 +255,9 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                             clean_sign(offset,clean_offset);
                             strupr(clean_offset);
                             if(offset[0]=='-')
-                                *salida = (-1*find_const(clean_offset,L_const,lineaString))<<4;
+                                *salida = (-1*find_const(clean_offset,L_const,lineaString,primera))<<4;
                             else
-                                *salida = find_const(clean_offset,L_const,lineaString)<<4;
+                                *salida = find_const(clean_offset,L_const,lineaString,primera)<<4;
                         }
 
                     if (is_register(strupr(aux),v_registers)){
@@ -278,7 +278,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                         *tipo=2;
                         if(ARG[0]!='"')
                             *tipo = 0;
-                       *salida = find_const(ARG,L_const,lineaString);
+                       *salida = find_const(ARG,L_const,lineaString,primera);
                     if(*salida==0x00000FFF)
                         *error=1;
                     }
@@ -291,20 +291,30 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
 }
 
 
-int find_const(char ARG[],TListaC *L_const,int *lineaString){
+int find_const(char ARG[],TListaC *L_const,int *lineaString,int *primera){
 int salida;
 
 while(*L_const!=NULL && strcmp(ARG,(*L_const)->name)!=0){
     *L_const=(*L_const)->sig;
 }
-        if(L_const!=NULL){
+        if(*L_const!=NULL){
             switch ((*L_const)->value[0]){//Lo pasamos a binario
                          case '"':  //String
-                        salida = *lineaString;
-                        if((*L_const)->used == 0)
-                            *lineaString+=strlen((*L_const)->value)-1;
-                         // hay que hacer que no sume el primero
-                         (*L_const)->used=1;
+                       if(*primera > 0){
+                                 if((*L_const)->used > 0)
+                                    salida = (*L_const)->used;
+                                else{
+                                    *lineaString+=strlen((*L_const)->value)-1;
+                                    salida=*lineaString;
+                                    (*L_const)->used=*lineaString;
+                             }
+
+                        }
+                        else{
+                            salida =*lineaString;
+                            (*L_const)->used=*lineaString;
+                            *primera=1;
+                        }
                         break;
                          case '\'': //ASCII
                            if((*L_const)->value[1]==NULL)

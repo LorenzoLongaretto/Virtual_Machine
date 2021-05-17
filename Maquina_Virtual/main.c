@@ -34,7 +34,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
     FILE *arch;
     TLista L=NULL;
     TListaC LC=NULL;
-    int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0;
+    int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0,primera=0;
     char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10],nom[10],equ[10],valor[10],auxcte[10];//finalLine es la linea sin rotulo ni comentarios
     int32_t salida1,salida2;
     char comentario[100];
@@ -91,8 +91,8 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                 if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0){
                     if(strcmp(second_arg,"NULL")!=0){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
-                        opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,&LC,&lineaString);
-                        opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers,&LC,&lineaString);
+                        opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,&LC,&lineaString,&primera);
+                        opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers,&LC,&lineaString,&primera);
                         if(salida1>0x00000FFF) //WARNING
                             warningcont+=1;
                         if(salida2>0x00000FFF)
@@ -106,7 +106,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     else{
                         if(strcmp(first_arg,"NULL")!=0){
                             memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
-                            opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,&LC,&lineaString);
+                            opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,&LC,&lineaString,&primera);
                             if(salida1>0x0000FFFF) //WARNING
                             warningcont+=1;
                             memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando
