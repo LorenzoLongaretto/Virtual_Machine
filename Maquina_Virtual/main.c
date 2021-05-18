@@ -102,7 +102,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
 FILE *arch;
 TLista L=NULL;
 TListaC LC=NULL;
-int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0,primera=0,header=0;
+int lineaActual=5,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0,primera=0,header=0;
 char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10],nom[10],equ[10],valor[10],auxcte[10];//finalLine es la linea sin rotulo ni comentarios
 int32_t salida1,salida2,sizes[5];
 char comentario[100];
@@ -124,7 +124,7 @@ arch=fopen("prueba.txt","rt");
 
         //Traduccion
         rewind(arch);
-        lineaActual=5;;
+        lineaActual=5;
         while(fgets(auxline,100,arch)!=NULL){
             if(valid_line(auxline)){
                 sscanf(auxline,"%s",firstword);
@@ -181,6 +181,9 @@ arch=fopen("prueba.txt","rt");
         }
          if(o==0)//si no esta el comando -o entra
             muestra_por_pantalla(memoria,lineaActual,auxline,comentario,auxcte,mnem,firstword);
+         //lineas validas
+                if(strcmp(auxcte,"EQU" )!=0 && strcmp(mnem,"\\\\ASM")!=0 && auxline[0]!=';')
+                    lineaActual++;
     }
     //printf("%d\n",lineaString);
         fclose(arch);

@@ -1,6 +1,6 @@
 \\ASM DATA=10 EXTRA=3000 STACK=5000
 CTEE equ 4
-const equ "hola"
+const equ "hola" ;hola
 CTE equ 10
 Mov CTE, '4'
 mov [ctee],%4E
