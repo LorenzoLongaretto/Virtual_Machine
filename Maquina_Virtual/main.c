@@ -37,7 +37,7 @@ while(L!=NULL){
 }*/
 void muestra_por_pantalla(int32_t memoria[],int lineaActual,char auxline[],char comentario[],char auxcte[],char mnem[],char firstword[]){
 
-    if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 &&auxline[0]!=';'){
+    if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 &&auxline[0]!=';' && auxline[0]!='\n'){
         if (firstword[0]=='\0')
             if(comentario[0]=='\0')
                 printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
@@ -168,7 +168,10 @@ arch=fopen("prueba.txt","rt");
                             memoria[lineaActual]|=(salida1 & 0x0000FFFF) ;
                         }
                         else// es stop
-                            memoria[lineaActual]= 0xFF100000;
+                            if(strcmp(mnem,"STOP")==0)
+                                memoria[lineaActual]= 0xFF100000;
+                            else
+                                memoria[lineaActual]= 0xFF000000;
                     }
                 }
                 else{

@@ -144,11 +144,11 @@ char ch = ':', *ret;
       return NULL;
 }
 
-int find_nmemonic(char *mnem,char v_mnemonics[253][5]){ //paso la linea completa y busca en el vector y devuelve la posicion
+int find_nmemonic(char *mnem,char v_mnemonics[4081][5]){ //paso la linea completa y busca en el vector y devuelve la posicion
 int i=0;
-    while((strcmp(mnem,v_mnemonics[i])!= 0) && (i<=260))
+    while((strcmp(mnem,v_mnemonics[i])!= 0) && (i<=4081))
         i++;
-        return (i<=260)? i:-1;
+        return (i<=4081)? i:-1;
 }
 
 void add_label(TLista *L, char x[],int actual_line){//Inserta al final

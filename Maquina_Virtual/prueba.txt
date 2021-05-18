@@ -1,26 +1,44 @@
-\\ASM DATA=10 EXTRA=3000 STACK=5000
-CTEE equ 4
-const equ "hola" ;hola
-CTE equ 10
-Mov CTE, '4'
-mov [ctee],%4E
-rotulo: MOV [bx+ctee],@4
-mov [const],#39
-mov AX,%A
-mov BX,7
-;hola
-shr AX,1 ;fdadsfsd
-jz rotulo
-shl BX,1
-mov cx,69
-swap ax,BX
-add [1],AX
-sub [2],BX
-mul [3],AX
-add [3],cx
-div [4],BX
-mov AX,%10
-mov CX,4
-mov DX,1
+MOV AX,%1
+MOV DX,10
+MOV CX,1
+SYS 1
+PUSH [10]
+CALL FACT
+ADD SP,1
+MOV [10],AX
+MOV AX,%1
 SYS 2
-;Espero que salga BIEN ;)
+STOP
+; SUBRUTINA
+FACT: PUSH BP ;guarda BP
+MOV BP,SP
+SUB SP,1 ;Espacio var local
+PUSH BX
+PUSH CX
+CMP [BP+2],1 ;if (n<=1)
+JP SIGO
+MOV AX,1 ;retorna 1
+JMP FIN
+SIGO: MOV BX,[BP+2]
+SUB BX,1 ;calcula n-1
+PUSH BX
+CALL FACT ;invocación recursiva
+ADD SP,1 ;compensa el PUSH
+MOV CX,[BP+2]
+MUL CX,AX ;res = n * (n-1)!
+MOV [BP-1],CX
+MOV AX,[BP-1] ;retorna res
+FIN: POP CX
+POP BX
+ADD SP,1 ;libera memoria
+MOV SP,BP
+POP BP
+RET
+
+
+
+
+
+
+
+
