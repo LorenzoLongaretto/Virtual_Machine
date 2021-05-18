@@ -143,7 +143,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     }
                 }
                 else{
-                    if(strcmp(auxcte,"EQU")!=0){
+                    if(strcmp(auxcte,"EQU" )!=0 && strcmp(mnem,"\\\\ASM")!=0){
                         memoria[lineaActual]=0xFFFFFFFF;//no ha menem
                         error=1;
                     }
