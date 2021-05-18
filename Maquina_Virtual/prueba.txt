@@ -1,14 +1,16 @@
 \\ASM DATA=10 EXTRA=3000 STACK=5000
-CTEE equ "asdg"
+CTEE equ 4
 const equ "hola"
 CTE equ 10
 Mov CTE, '4'
 mov [ctee],%4E
-MOV [bx+ctee],@4
+rotulo: MOV [bx+ctee],@4
 mov [const],#39
 mov AX,%A
 mov BX,7
-shr AX,1
+;hola
+shr AX,1 ;fdadsfsd
+jz rotulo
 shl BX,1
 mov cx,69
 swap ax,BX

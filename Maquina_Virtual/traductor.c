@@ -280,7 +280,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
                 }
         }
             else{//OPERANDO INDIRECTO
-                if (ARG[0]=='['&& (ARG[1]>='A' && ARG[1]<='z')){
+                if (ARG[0]=='['&& is_register(aux,v_registers)){
 
 
                     if(offset[0]!='\0')
