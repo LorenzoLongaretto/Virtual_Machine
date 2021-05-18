@@ -1,4 +1,4 @@
-;Prueba aritmética
+\\ASM DATA=10 EXTRA=3000 STACK=5000
 CTEE equ "asdg"
 const equ "hola"
 CTE equ 10

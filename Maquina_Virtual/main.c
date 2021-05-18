@@ -4,6 +4,11 @@
 #include <stdint.h>
 #include "traductor.h"
 #include<ctype.h>
+
+#define CS 3
+#define DS 0
+#define SS 1
+#define ES 2
 int o;
 void create_arch(int32_t memoria[],int N,char *filename){
 int i;
@@ -34,9 +39,9 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
     FILE *arch;
     TLista L=NULL;
     TListaC LC=NULL;
-    int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0,primera=0;
+    int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0,primera=0,header=0;
     char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10],nom[10],equ[10],valor[10],auxcte[10];//finalLine es la linea sin rotulo ni comentarios
-    int32_t salida1,salida2;
+    int32_t salida1,salida2,sizes[4];
     char comentario[100];
     arch=fopen("prueba.txt","rt");
     if(arch!=NULL){
@@ -45,7 +50,12 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
          while (fgets(auxline,100,arch)!=NULL){
             if(valid_line(auxline)){
                 sscanf(auxline,"%s",firstword);
-                if (is_label(firstword)){  // Rotulo
+                if(strcmp(strupr(firstword),"\\\\ASM")==0){
+                    header=1;
+                    size_segment(auxline,sizes);
+                }
+                else{
+                    if (is_label(firstword)){  // Rotulo
                     strupr(firstword);
                     firstword[strlen(firstword)-1]='\0';//paso label sin :
                     add_label(&L,firstword,lineaActual);
@@ -58,18 +68,34 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                         add_const(&LC,strupr(nom),valor);
                     }
 
+                }
             }
-            if(cte!=1)
-            lineaActual++;
 
+            if(cte!=1 && header!=1)
+            lineaActual++; // CS
+
+            // DS SS ES CS
             cte=0;
+            header=0;
         }
         }
-        muestraL(LC);
-        lineaString = lineaActual;
+        sizes[CS] = lineaActual;
+        //muestraL(LC);
+        memoria[0]= 1297494577;
+        memoria[1] = sizes[DS];
+        memoria[2] = sizes[SS];
+        memoria[3] = sizes[ES];
+        memoria[4] = sizes[CS];
+        printf("%X\n",memoria[0]);
+       printf("%d\n",memoria[3]);
+
+        lineaString = lineaActual+5;
+        // Cargar en memoria los 5 bloques del header
+
+
         //Traduccion
         rewind(arch);
-        lineaActual=0;
+        lineaActual=5;;
         while(fgets(auxline,100,arch)!=NULL){
             if(valid_line(auxline)){
                 sscanf(auxline,"%s",firstword);
@@ -88,7 +114,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                 sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);
                 strcpy(auxcte,first_arg); strupr(auxcte);
                 strupr(mnem);/*strupr(first_arg);strupr(second_arg);*/
-                if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0){
+                if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0  && strcmp(mnem,"\\\\ASM")!=0){
                     if(strcmp(second_arg,"NULL")!=0){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
                         opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString,&primera);
@@ -123,7 +149,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
                     }
                 }
                 if(o==0){//si no esta el comando -o entra
-                    if(strcmp(auxcte,"EQU")!=0){
+                    if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 ){
                     if (firstword[0]=='\0')
                         if(comentario[0]=='\0')
                             printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);

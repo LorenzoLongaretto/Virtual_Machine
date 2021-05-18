@@ -4,6 +4,11 @@
 #include "traductor.h"
 #include<ctype.h>
 
+#define CS 3
+#define DS 0
+#define SS 1
+#define ES 2
+
 void create_mnemonics(char v_mnemonics[253][5]){
 int i;
     for (i=0;i<16;i++)
@@ -65,6 +70,39 @@ int i;
     strcpy(vec[13],"DX");
     strcpy(vec[14],"EX");
     strcpy(vec[15],"FX");
+}
+
+void size_segment(char line[],int vec[]){
+char *token,*ret;
+char valor[20];
+
+
+vec[DS] = 1024;
+vec[ES] = 1024;
+vec[SS] = 1024;
+    token = strtok(line," ");
+    while(token!=NULL){
+              ret = strchr(token,'=');
+              if(token[0]!='\\')
+              clean_sign(ret,valor);
+    switch(token[0]){
+
+            case 'D':
+            vec[DS] = atoi(valor);
+            break;
+
+            case 'E':
+            vec[ES] = atoi(valor);
+            break;
+
+            case 'S':
+             vec[SS] = atoi(valor);
+            break;
+    }
+
+    token = strtok(NULL," ");
+    }
+
 }
 
 int is_mnemonic(char string[], char v_mnemonics[24][5]){
