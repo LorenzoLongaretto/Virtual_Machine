@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
 {
 int32_t memoria[8192];
 int o=0;
-char v_mnemonics[4081][5], v_registers[16][3];
+char v_mnemonics[4082][5], v_registers[16][3];
 //argc=4;
 //argv[1]="prueba.txt";
 //argv[2]="prueba.bin";

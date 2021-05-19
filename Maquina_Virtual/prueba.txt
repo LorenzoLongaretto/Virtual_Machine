@@ -1,34 +1,40 @@
-\\ASM DATA=10 EXTRA=3000 STACK=5000
-; Leo entradas. ej: 101,AA,FF,CAE
+\\ASM DATA=1000 EXTRA=2000 STACK=3000
+MOV AX,%1
+MOV DX,10
+MOV CX,1
+SYS 1
+PUSH [10]
+CALL FACT
+ADD SP,1
+MOV [10],AX
+MOV AX,%1
+SYS 2
+STOP
 
-        mov     ax  ,   %008
-;       mov     ax  ,   %001
-        mov     cx  ,   1
-        mov     dx  ,   0
-        sys     1
+; SUBRUTINA
+FACT: PUSH BP ;guarda BP
+MOV BP,SP
+SUB SP,1 ;Espacio var local
+PUSH BX
+PUSH CX
+CMP [BP+2],1 ;if (n<=1)
+JP SIGO
+MOV AX,1 ;retorna 1
+JMP FIN
 
-; Inicializo
-        mov     ax  ,   32
-        xor     [1] ,   [1]
+SIGO: MOV BX,[BP+2]
+SUB BX,1 ;calcula n-1
+PUSH BX
+CALL FACT ;invocacin recursiva
+ADD SP,1 ;compensa el PUSH
+MOV CX,[BP+2]
+MUL CX,AX ;res = n * (n-1)!
+MOV [BP-1],CX
+MOV AX,[BP-1] ;retorna res
 
-; Calculos
-
-sigue:  mov     ex  ,   [0]
-        shl     [0] ,   1
-        shr     ex  ,   31
-        and     ex  ,   1
-        mul     [1] ,   10
-        add     [1] ,   ex
-        sub     ax  ,   1
-        jnz     sigue
-
-; Muestro resultados
-
-        mov     ax  ,   %001
-        mov     cx  ,   1
-        mov     dx  ,   1
-        sys     2
-        stop
-        mov     [1] ,   1 ; ojo esto no.
-        sys     2
-        stop
+FIN: POP CX
+POP BX
+ADD SP,1 ;libera memoria
+MOV SP,BP
+POP BP
+RET
