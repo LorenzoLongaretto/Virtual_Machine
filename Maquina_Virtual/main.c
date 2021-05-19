@@ -36,18 +36,18 @@ L=L->sig;
 
 }*/
 void muestra_por_pantalla(int32_t memoria[],int lineaActual,char auxline[],char comentario[],char auxcte[],char mnem[],char firstword[]){
-
+int i=lineaActual-5;
 if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 &&auxline[0]!=';' && auxline[0]!='\n'){
     if (firstword[0]=='\0')
         if(comentario[0]=='\0')
-            printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
+            printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
         else
-            printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s \t%s",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline,comentario);
+            printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s \t%s",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline,comentario);
     else
         if(comentario[0]=='\0')
-                        printf("[%04d]: %02X %02X %02X %02X\t%s\t%s \n",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
+                        printf("[%04d]: %02X %02X %02X %02X\t%s\t%s \n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
         else
-                        printf("[%04d]: %02X %02X %02X %02X\t%s\t%s\t%s",lineaActual,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline,comentario);
+                        printf("[%04d]: %02X %02X %02X %02X\t%s\t%s\t%s",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline,comentario);
                 }
 else{
     if(auxline[0]==';')
@@ -85,9 +85,9 @@ if(valid_line(auxline)){
                 }
             }
         }
-      if(sumalinea) //de merca
+      if(sumalinea)
         (*lineaActual)++;
-      sumalinea=0;
+      sumalinea=1;
     }
 }
 void cargamem(int32_t memoria[],int sizes[]){
@@ -106,7 +106,7 @@ void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char
 FILE *arch;
 TLista L=NULL;
 TListaC LC=NULL;
-int lineaActual=5,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0,primera=0,header=0;
+int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0,primera=0,header=0;
 char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10],nom[10],equ[10],valor[10],auxcte[10];//finalLine es la linea sin rotulo ni comentarios
 int32_t salida1,salida2,sizes[5];
 char comentario[100];
@@ -122,6 +122,7 @@ if(arch!=NULL){// Rotulos y Constantes
    printf("%d\n",memoria[1]);
    printf("%d\n",memoria[2]);
    printf("%d\n",memoria[3]);
+   printf("%d\n",memoria[4]);
 
     lineaString = lineaActual+5;
     // Cargar en memoria los 5 bloques del header
@@ -147,7 +148,7 @@ if(arch!=NULL){// Rotulos y Constantes
             sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);
             strcpy(auxcte,first_arg); strupr(auxcte);
             strupr(mnem);/*strupr(first_arg);strupr(second_arg);*/
-            if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0  && strcmp(mnem,"\\\\ASM")!=0){
+            if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0  /*&& strcmp(mnem,"\\\\ASM")!=0*/){
                 if(strcmp(second_arg,"NULL")!=0){
                     memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
                     opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString,&primera);
@@ -184,12 +185,11 @@ if(arch!=NULL){// Rotulos y Constantes
                     error=1;
                 }
             }
-
     }
      if(o==0)//si no esta el comando -o entra
         muestra_por_pantalla(memoria,lineaActual,auxline,comentario,auxcte,mnem,firstword);
      //lineas validas
-            if(strcmp(auxcte,"EQU" )!=0 && strcmp(mnem,"\\\\ASM")!=0 && auxline[0]!=';')
+            if(strcmp(auxcte,"EQU" )!=0 && strcmp(mnem,"\\\\ASM")!=0 && auxline[0]!=';' && valid_line(auxline))
                 lineaActual++;
 }
 //printf("%d\n",lineaString);
