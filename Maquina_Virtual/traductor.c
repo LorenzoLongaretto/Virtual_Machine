@@ -4,10 +4,10 @@
 #include "traductor.h"
 #include<ctype.h>
 
-#define CS 3
-#define DS 0
-#define SS 1
-#define ES 2
+#define CS 4
+#define DS 1
+#define SS 2
+#define ES 3
 
 void create_mnemonics(char v_mnemonics[253][5]){
 int i;

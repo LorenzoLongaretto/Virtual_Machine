@@ -4,10 +4,10 @@
 #include <stdint.h>
 #include "traductor.h"
 #include<ctype.h>
-#define DS 0
-#define SS 1
-#define ES 2
-#define CS 3
+#define DS 1
+#define SS 2
+#define ES 3
+#define CS 4
 
 void create_arch(int32_t memoria[],int N,char *filename){
 int i;
@@ -61,7 +61,7 @@ else{
 
 
 
-void primera_pasada(char auxline[100],TLista *L,TListaC *LC,char sizes[],int *lineaActual){
+void primera_pasada(char auxline[100],TLista *L,TListaC *LC,int sizes[],int *lineaActual){
 char firstword[10],nom[10],equ[10],valor[10];
 int sumalinea=1;
 if(valid_line(auxline)){
@@ -90,12 +90,16 @@ if(valid_line(auxline)){
       sumalinea=0;
     }
 }
-void cargamem(int32_t memoria[],char sizes[]){
+void cargamem(int32_t memoria[],int sizes[]){
 int i,j=0;
 memoria[0]= 1297494577;
-for(i=1;i<5;i++,j++){
+/*for(i=1;i<5;i++,j++){
     memoria[i]=sizes[j];
-}
+}*/
+        memoria[1] = sizes[DS];
+        memoria[2] = sizes[SS];
+        memoria[3] = sizes[ES];
+        memoria[4] = sizes[CS];
 }
 
 void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char *argv[],int o){
@@ -114,10 +118,10 @@ if(arch!=NULL){// Rotulos y Constantes
     sizes[CS] = lineaActual;
     cargamem(memoria,sizes);
 
-  /* printf("%X\n",memoria[0]);
+   printf("%X\n",memoria[0]);
    printf("%d\n",memoria[1]);
    printf("%d\n",memoria[2]);
-   printf("%d\n",memoria[3]);*/
+   printf("%d\n",memoria[3]);
 
     lineaString = lineaActual+5;
     // Cargar en memoria los 5 bloques del header
