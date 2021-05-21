@@ -12,7 +12,7 @@
 void create_arch(int32_t memoria[],int N,char *filename){
 int i;
 FILE *arch;
-arch=fopen("prueba.bin","wb");
+arch=fopen("listaspower.bin","wb");
 for (i=0;i<N;i++){
 fwrite(&memoria[i],sizeof(memoria[i]),1,arch);
 }
@@ -108,7 +108,8 @@ TLista L=NULL;
 TListaC LC=NULL;
 int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0,primera=0,header=0;
 char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10],nom[10],equ[10],valor[10],auxcte[10];//finalLine es la linea sin rotulo ni comentarios
-int32_t salida1,salida2,sizes[5];
+int32_t salida1,salida2;
+int32_t sizes[]={1297494577,1024,1024,1024,1024,0};
 char comentario[100];
 arch=fopen("prueba.txt","rt");
 if(arch!=NULL){// Rotulos y Constantes
@@ -142,14 +143,14 @@ if(arch!=NULL){// Rotulos y Constantes
                 sscanf(auxline,"%s",firstword);
                 strcpy(auxline,only_label(auxline));
             }
-            strcpy(first_arg,"NULL");
-            strcpy(second_arg,"NULL");
+            strcpy(first_arg,"\0");
+            strcpy(second_arg,"\0");
             change_char(auxline);
             sscanf(auxline,"%s %s %s",mnem,first_arg,second_arg);
             strcpy(auxcte,first_arg); strupr(auxcte);
             strupr(mnem);/*strupr(first_arg);strupr(second_arg);*/
             if (find_nmemonic(mnem,v_mnemonics)!=-1 && strcmp(auxcte,"EQU")!=0  /*&& strcmp(mnem,"\\\\ASM")!=0*/){
-                if(strcmp(second_arg,"NULL")!=0){
+                if(strcmp(second_arg,"\0")!=0){
                     memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<28;
                     opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString,&primera);
                     opereitor1(second_arg,&salida2,L, &tipo2,&error,v_registers,LC,&lineaString,&primera);
@@ -164,7 +165,7 @@ if(arch!=NULL){// Rotulos y Constantes
 
                 }
                 else{
-                    if(strcmp(first_arg,"NULL")!=0 && strcmp(auxcte,"EQU")!=0){
+                    if(strcmp(first_arg,"\0")!=0 && strcmp(auxcte,"EQU")!=0){
                         memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
                         opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString,&primera);
                         if(salida1>0x0000FFFF) //WARNING
