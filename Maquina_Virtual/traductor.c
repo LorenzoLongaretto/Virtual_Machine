@@ -282,7 +282,7 @@ else{
         else{//OPERANDO INDIRECTO
             if (ARG[0]=='['&& is_register(aux,v_registers)){
 
-
+                *salida=0;
                 if(offset[0]!='\0')
                     if(offset[1]>='0' &&offset[1]<='9')
                         *salida=(strtoul(offset,NULL,10))<<4;
