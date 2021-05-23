@@ -12,7 +12,7 @@
 void create_arch(int32_t memoria[],int N,char *filename){
 int i;
 FILE *arch;
-arch=fopen("e7.bin","wb");
+arch=fopen("5.bin","wb");
 for (i=0;i<N;i++){
 fwrite(&memoria[i],sizeof(memoria[i]),1,arch);
 }
@@ -37,7 +37,7 @@ L=L->sig;
 }*/
 void muestra_por_pantalla(int32_t memoria[],int lineaActual,char auxline[],char comentario[],char auxcte[],char mnem[],char firstword[]){
 int i=lineaActual-5;
-if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 &&auxline[0]!=';' && auxline[0]!='\n'){
+if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 &&auxline[0]!=';' && auxline[0]!='\n' ){
     if (firstword[0]=='\0')
         if(comentario[0]=='\0')
             printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
@@ -100,7 +100,7 @@ memoria[0]= 1297494577;
         memoria[1] = sizes[DS];
         memoria[2] = sizes[SS];
         memoria[3] = sizes[ES];
-        memoria[4] = sizes[CS]-5;
+        memoria[4] = sizes[CS];
 }
 
 void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char *argv[],int o){
@@ -112,7 +112,7 @@ char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mne
 int32_t salida1,salida2;
 int32_t sizes[]={1297494577,1024,1024,1024,1024,0};
 char comentario[100];
-arch=fopen("e7.txt","rt");
+arch=fopen("5.asm","rt");
 if(arch!=NULL){// Rotulos y Constantes
 
      while (fgets(auxline,100,arch)!=NULL)
@@ -206,7 +206,6 @@ if(arch!=NULL){// Rotulos y Constantes
         printf("No se creo el archivo ya que hubo errores");
     }
 }
-printf("%d\n",memoria[4]);
 }
 
 int main(int argc, char *argv[])

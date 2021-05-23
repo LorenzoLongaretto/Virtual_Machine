@@ -139,7 +139,7 @@ L=L->sig;
 int valid_line(char string[]){    // string[] es la cadena completa de la linea del archivo
 char aux[100];
 sscanf(string,"%s",aux);//leo el primer string de toda la cadena
-if (string[0]=='\n' /*||string[0]=='\t'*/||string[0]==';' || string[0]=='\0') //si no es espacio laburo
+if (string[0]=='\n' ||(string[0]=='\t' && (string[1]=='\0') )||string[0]==';' || string[0]=='\0') //si no es espacio laburo
     return 0;
 else
     return 1;
@@ -211,13 +211,23 @@ for(i=1;i<=strlen(string);i++){
     aux[i-1]=string[i];
 
 }
-
 }
-
+/*
 void clean_arg(char str[], char aux[]){//Entra str y devuelve un aux solo con el numero
 int i=0,j=0;
 while(str[i]!='\0'){
     if((str[i]>='0' && str[i]<='9'||str[i]=='-'||str[i]=='+') || isalpha(str[i]) || str[i]=='\''){
+        aux[j]=str[i];
+        aux[j+1]='\0';
+        j++;
+    }
+    i++;
+}
+}*/
+void clean_arg(char str[], char aux[]){
+int i=0,j=0;
+while(str[i]!='\0'){
+    if(str[i]!='[' && str[i]!=']' && str[i]!='%' && str[i]!='@' && str[i]!='#'){
         aux[j]=str[i];
         aux[j+1]='\0';
         j++;
