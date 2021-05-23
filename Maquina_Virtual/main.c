@@ -37,28 +37,27 @@ L=L->sig;
 }*/
 void muestra_por_pantalla(int32_t memoria[],int lineaActual,char auxline[],char comentario[],char auxcte[],char mnem[],char firstword[]){
 int i=lineaActual-5;
-if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 && valid_line(auxline) ){
-    if (firstword[0]=='\0')
-        if(comentario[0]=='\0')
-            printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
-        else
-            printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s \t%s",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline,comentario);
-    else
-        if(comentario[0]=='\0')
-                        printf("[%04d]: %02X %02X %02X %02X\t%s\t%s \n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
-        else
-                        printf("[%04d]: %02X %02X %02X %02X\t%s\t%s\t%s",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline,comentario);
-                }
-else{
-    if(auxline[0]==';')
-        printf("%s",auxline);
-   // else
-   //     printf("%s \n",auxline);
+    if(!is_garbage(auxline)){
+        if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 && valid_line(auxline) ){
+            if (firstword[0]=='\0')
+                if(comentario[0]=='\0')
+                    printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
+                else
+                    printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s \t%s",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline,comentario);
+            else
+                if(comentario[0]=='\0')
+                                printf("[%04d]: %02X %02X %02X %02X\t%s\t%s \n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
+                else
+                                printf("[%04d]: %02X %02X %02X %02X\t%s\t%s\t%s",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline,comentario);
+        }
+        else{
+            if(auxline[0]==';')
+              printf("%s",auxline);
+           // else
+           //     printf("%s \n",auxline);
+        }
+    }
 }
-
-}
-
-
 
 
 void primera_pasada(char auxline[100],TLista *L,TListaC *LC,int sizes[],int *lineaActual){
