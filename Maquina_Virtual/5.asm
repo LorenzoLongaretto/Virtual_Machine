@@ -3,7 +3,7 @@
         mov     [1], @165
         mov     [2], 101
         mov     [3], #110
-        mov     [4], 'o'
+	mov     [4], 'o'
         mov     ex, ' '
         not     ex
 CMP1:   cmp     0,0
@@ -30,3 +30,4 @@ COM5:   and     [4], ex
         mov     DX, 0
         sys     2
 	
+  

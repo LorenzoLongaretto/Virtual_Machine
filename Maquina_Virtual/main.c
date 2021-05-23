@@ -52,8 +52,8 @@ if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 && valid_line(auxline) 
 else{
     if(auxline[0]==';')
         printf("%s",auxline);
-    else
-        printf("%s \n",auxline);
+   // else
+   //     printf("%s \n",auxline);
 }
 
 }
