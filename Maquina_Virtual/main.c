@@ -12,7 +12,7 @@
 void create_arch(int32_t memoria[],int N,char *filename){
 int i;
 FILE *arch;
-arch=fopen("pruebastring.bin","wb");
+arch=fopen("e7.bin","wb");
 for (i=0;i<N;i++){
 fwrite(&memoria[i],sizeof(memoria[i]),1,arch);
 }
@@ -77,9 +77,10 @@ if(valid_line(auxline)){
                 add_label(L,firstword,*lineaActual); //ese * dudoso esta bien
             }
             else{    // Constante
-                sscanf(auxline,"%s %s %s",nom,equ,valor);
+               sscanf(auxline,"%s %s",nom,equ);
                 strupr(equ);
                 if(strcmp(equ,"EQU")==0){
+                    getstr(auxline,valor);
                     sumalinea=0;
                     add_const(LC,strupr(nom),valor);
                 }
@@ -99,7 +100,7 @@ memoria[0]= 1297494577;
         memoria[1] = sizes[DS];
         memoria[2] = sizes[SS];
         memoria[3] = sizes[ES];
-        memoria[4] = sizes[CS];
+        memoria[4] = sizes[CS]-5;
 }
 
 void load_register(int32_t memoria[], char v_mnemonics[],char v_registers[],char *argv[],int o){
@@ -111,7 +112,7 @@ char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mne
 int32_t salida1,salida2;
 int32_t sizes[]={1297494577,1024,1024,1024,1024,0};
 char comentario[100];
-arch=fopen("pruebastring.txt","rt");
+arch=fopen("e7.txt","rt");
 if(arch!=NULL){// Rotulos y Constantes
 
      while (fgets(auxline,100,arch)!=NULL)
@@ -125,7 +126,7 @@ if(arch!=NULL){// Rotulos y Constantes
    printf("%d\n",memoria[3]);
    printf("%d\n",memoria[4]);
 
-    lineaString = lineaActual+5;
+    lineaString = lineaActual;
     // Cargar en memoria los 5 bloques del header
 
     //Traduccion
@@ -195,7 +196,7 @@ if(arch!=NULL){// Rotulos y Constantes
 }
 //printf("%d\n",lineaString);
     fclose(arch);
-    load_cte_string(LC,memoria);
+    load_cte_string(LC,memoria,&lineaActual);
     if(warningcont!=0)
         printf("hay %d warnings",warningcont);
     if(!error){
@@ -205,6 +206,7 @@ if(arch!=NULL){// Rotulos y Constantes
         printf("No se creo el archivo ya que hubo errores");
     }
 }
+printf("%d\n",memoria[4]);
 }
 
 int main(int argc, char *argv[])

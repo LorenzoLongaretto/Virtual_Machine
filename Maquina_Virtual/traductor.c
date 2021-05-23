@@ -104,6 +104,18 @@ token = strtok(NULL," ");
 }
 
 }
+void getstr(char string[],char aux[] ){
+int i=0,j=0;
+while(string[i]!='"'){
+    i++;
+}
+
+while(string[i]!='\0'){
+    aux[j]=string[i];
+    j++;i++;
+}
+
+}
 
 int is_mnemonic(char string[], char v_mnemonics[24][5]){
 int i=0;
@@ -333,6 +345,7 @@ if(string[i]!='"'){
 }
 i++;
 }
+aux[j-1]='\0';
 }
 
 int find_const(char ARG[],TListaC L,int *lineaString,int *primera){
@@ -381,15 +394,17 @@ L=(L)->sig;
        salida = 0x00000FFF;
 return salida;
 }
-void load_cte_string(TListaC L,int memoria[]){
+void load_cte_string(TListaC L,int memoria[],int *N){
 char aux[10];
 int i;
 while(L!=NULL){
 if(L->value[0]=='"'){
     clean_string(L->value,aux);
     for(i=0;i<=strlen(aux);i++){
-        memoria[L->used+i]=aux[i];
+        memoria[L->used+i+5]=aux[i];
        // printf("%c \n",memoria[L->used+i]);
+       memoria[CS]+=1;
+       ++(*N);
     }
 
 }
