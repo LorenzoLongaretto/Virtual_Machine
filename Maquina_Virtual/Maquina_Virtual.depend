@@ -61,14 +61,14 @@
 	<string.h>
 	"traductor.h"
 
-1618858452 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.c
+1621802422 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"traductor.h"
 	<ctype.h>
 
-1618858662 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\main.c
+1621802573 source:c:\users\robert\documents\github\virtual_machine\maquina_virtual\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -78,7 +78,7 @@
 
 1618333637 c:\users\robert\documents\github\virtual_machine\maquina_virtual\instrucciones.h
 
-1618787746 c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.h
+1621800358 c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.h
 
 1621270241 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.h
 
