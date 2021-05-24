@@ -1,51 +1,52 @@
-m1 equ "hdfgdf"
-m2 equ "gfsd"
+m1 equ "es"
+m2 equ "no es"
 MOV DX, 0
 MOV CX, 50
 MOV AX, %000
 SYS %3
 
 mov ax,[0]
+mov bx , 0
 push ax
 slen cx, [0]
 sub cx,1
 push [cx] ;la direccion del final
 call palind
-mov dx,m1 ;es pal
-mov cx,1
-mov [0], ax
-mov ax,%1
-sys 2
+ldh 3
+ldl m1
+mov dx,ac ;es pal
+mov ax,%100
+sys 4
 stop
 
 palind: push bp
 mov bp,sp
+mov ax, [bx]
+mov ex, [cx]
 push ax
-push cx
-add ax,1
+push ex
+add bx,1
 sub cx, 1
-; cmp [bp+3],[bp+2] ; ax,bx
 cmp cx, 0
 jnz sigo
 jmp fin
 
 sigo: mov ax ,[bp+3]
-mov cx ,[bp+2]
-add [ax],1
-sub cx,1
+mov ex ,[bp+2]
 call palind
-cmp ax,bx
+cmp ax,ex
 jnz fin2
 
-fin: pop bx
+fin: pop ex
 pop ax
 mov sp,bp
 pop bp
 ret
 
-fin2: mov dx,m1 ;no es
-mov cx,1
-mov [0], ax
-mov ax,%1
-sys 2
+fin2: ldh 3
+ldl m2
+mov dx,ac
+mov cx, 5
+mov ax,%100
+sys 4
 stop

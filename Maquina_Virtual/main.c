@@ -12,7 +12,7 @@
 void create_arch(int32_t memoria[],int N,char *filename){
 int i;
 FILE *arch;
-arch=fopen("5.bin","wb");
+arch=fopen("e7.bin","wb");
 for (i=0;i<N;i++){
 fwrite(&memoria[i],sizeof(memoria[i]),1,arch);
 }
@@ -112,7 +112,7 @@ char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mne
 int32_t salida1,salida2;
 int32_t sizes[]={1297494577,1024,1024,1024,1024,0};
 char comentario[100];
-arch=fopen("5.asm","rt");
+arch=fopen("e7.txt","rt");
 if(arch!=NULL){// Rotulos y Constantes
 
      while (fgets(auxline,100,arch)!=NULL)
