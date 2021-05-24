@@ -1,7 +1,7 @@
-; Bueno, ya hemos terminado o casi...
+const equ "hola"
         mov     [0], %62
         mov     [1], @165
-        mov     [2], 101
+        mov     [bx], const
         mov     [3], #110
 	mov     [4], 'o'
         mov     ex, ' '
@@ -29,8 +29,10 @@ COM5:   and     [4], ex
         mov     CX, 5
         mov     DX, 0
         sys     2
-     
-   	 	
+
+
+
+ 	 	
   		  
  
  	

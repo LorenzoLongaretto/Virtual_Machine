@@ -12,7 +12,7 @@
 void create_arch(int32_t memoria[],int N,char *filename){
 int i;
 FILE *arch;
-arch=fopen("5.bin","wb");
+arch=fopen("e7.bin","wb");
 for (i=0;i<N;i++){
 fwrite(&memoria[i],sizeof(memoria[i]),1,arch);
 }
@@ -53,8 +53,8 @@ int i=lineaActual-5;
         else{
             if(auxline[0]==';')
               printf("%s",auxline);
-           // else
-           //     printf("%s \n",auxline);
+            else
+                printf("%s \n",auxline);
         }
     }
 }
@@ -63,7 +63,7 @@ int i=lineaActual-5;
 void primera_pasada(char auxline[100],TLista *L,TListaC *LC,int sizes[],int *lineaActual){
 char firstword[10],nom[10],equ[10],valor[10];
 int sumalinea=1;
-if(valid_line(auxline)){
+if(valid_line(auxline) && !is_garbage(auxline)){
     sscanf(auxline,"%s",firstword);
         if(strcmp(strupr(firstword),"\\\\ASM")==0){
             sumalinea=0;
@@ -111,7 +111,7 @@ char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mne
 int32_t salida1,salida2;
 int32_t sizes[]={1297494577,1024,1024,1024,1024,0};
 char comentario[100];
-arch=fopen("5.asm","rt");
+arch=fopen("e7.txt","rt");
 if(arch!=NULL){// Rotulos y Constantes
 
      while (fgets(auxline,100,arch)!=NULL)
@@ -176,8 +176,11 @@ if(arch!=NULL){// Rotulos y Constantes
                     else// es stop
                         if(strcmp(mnem,"STOP")==0)
                             memoria[lineaActual]= 0xFF100000;
-                        else
+                        else{
+                            if(strcmp(mnem,"RET")==0)
                             memoria[lineaActual]= 0xFF000000;
+                        }
+
                 }
             }
             else{
