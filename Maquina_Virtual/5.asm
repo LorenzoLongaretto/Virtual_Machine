@@ -29,19 +29,5 @@ COM5:   and     [4], ex
         mov     CX, 5
         mov     DX, 0
         sys     2
-     
-   	 	
-  		  
- 
- 	
-	 
-	 
 	
- 	
-	 
- 
- 
- 
- 
- 
-              					
+  
