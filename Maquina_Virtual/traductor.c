@@ -116,13 +116,7 @@ while(string[i]!='\0'){
 }
 
 }
-int is_garbage(char word[5]){
-int i=0, large;
-large = sizeof(word);
-    while(word[i]!='\0' && !isalpha(word[i]))
-        i++;
-    return i<large;
-}
+
 int is_mnemonic(char string[], char v_mnemonics[24][5]){
 int i=0;
 while((strcmp(string,v_mnemonics[i]) != 0) && i<=24)
