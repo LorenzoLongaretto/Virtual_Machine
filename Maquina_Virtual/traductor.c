@@ -419,14 +419,16 @@ char aux[10];
 int i;
 while(L!=NULL){
 if(L->value[0]=='"'){
-    clean_string(L->value,aux);
-    for(i=0;i<=strlen(aux);i++){
+        if(L->used!=0){
+            clean_string(L->value,aux);
+        for(i=0;i<=strlen(aux);i++){
         memoria[L->used+i+5]=aux[i];
        // printf("%c \n",memoria[L->used+i]);
        memoria[CS]+=1;
        ++(*N);
-    }
+        }
 
+    }
 }
 L=L->sig;
 }
