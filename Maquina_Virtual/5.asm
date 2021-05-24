@@ -1,7 +1,7 @@
-const equ "hola"
+
         mov     [0], %62
         mov     [1], @165
-        mov     [bx], const
+        mov     [2], 'e'
         mov     [3], #110
 	mov     [4], 'o'
         mov     ex, ' '
