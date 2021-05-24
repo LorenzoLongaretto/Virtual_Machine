@@ -72,7 +72,7 @@ strcpy(vec[14],"EX");
 strcpy(vec[15],"FX");
 }
 
-void size_segment(char line[],int vec[]){
+void size_segment(char line[],int vec[],int *error){
 char *token,*ret;
 char valor[20];
 
@@ -101,6 +101,10 @@ switch(token[0]){
 }
 
 token = strtok(NULL," ");
+}
+if(vec[DS]>65535 || vec[ES] >65535 || vec[SS]>65535){
+    printf("Valores no apropiados en directivas\n");
+    *error=1;
 }
 
 }

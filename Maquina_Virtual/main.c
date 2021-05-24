@@ -60,14 +60,15 @@ int i=lineaActual-5;
 }
 
 
-void primera_pasada(char auxline[100],TLista *L,TListaC *LC,int sizes[],int *lineaActual){
+void primera_pasada(char auxline[100],TLista *L,TListaC *LC,int sizes[],int *lineaActual,int *error){
 char firstword[10],nom[10],equ[10],valor[10];
 int sumalinea=1;
 if(valid_line(auxline) && !is_garbage(auxline)){
     sscanf(auxline,"%s",firstword);
+    //Hacer busqueda en las dos listas, si ya existe pasar error y no insertar en las listas. Imprimir mensaje por pantalla
         if(strcmp(strupr(firstword),"\\\\ASM")==0){
             sumalinea=0;
-            size_segment(auxline,sizes);
+            size_segment(auxline,sizes,error);  // validar que no se pase de 65535 (No es la suma)
         }
         else{
             if (is_label(firstword)){  // Rotulo
@@ -115,7 +116,7 @@ arch=fopen("e7.txt","rt");
 if(arch!=NULL){// Rotulos y Constantes
 
      while (fgets(auxline,100,arch)!=NULL)
-        primera_pasada(auxline,&L,&LC,sizes,&lineaActual);
+        primera_pasada(auxline,&L,&LC,sizes,&lineaActual,&error);
     sizes[CS] = lineaActual;
     cargamem(memoria,sizes);
 
