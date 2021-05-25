@@ -197,6 +197,28 @@ aux->sig=NULL;
 aux->sig=*LC;
 *LC=aux;
 }
+int search_label(TLista L,char label[]){
+TLista act=L;
+
+    while(act!=NULL){
+        if(strcmp(act->label,label)==0)
+            return 1;
+        act=act->sig;
+    }
+    return 0;
+}
+
+
+int search_const(TListaC LC,char name[]){
+TListaC act=LC;
+
+    while(act!=NULL){
+        if(strcmp(act->name,name)==0)
+            return 1;
+        act=act->sig;
+    }
+    return 0;
+}
 
 int is_register(char x[],char v_registers[][3]){
 int i=0;

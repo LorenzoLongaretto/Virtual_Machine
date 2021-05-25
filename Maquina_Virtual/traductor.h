@@ -44,3 +44,7 @@ void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, 
 int find_const(char ARG[],TListaC L_const,int *lineaString,int *primera);
 
 void size_segment(char line[],int vec[],int *error);
+
+int search_label(TLista L,char label[]);
+
+int search_const(TListaC LC,char name[]);

@@ -74,7 +74,10 @@ if(valid_line(auxline) && !is_garbage(auxline)){
             if (is_label(firstword)){  // Rotulo
                 strupr(firstword);
                 firstword[strlen(firstword)-1]='\0';//paso label sin :
-                add_label(L,firstword,*lineaActual); //ese * dudoso esta bien
+                if(search_label(L,firstword)==0)
+                add_label(L,firstword,*lineaActual);//ese * dudoso esta bien
+                else
+                    *error=1;
             }
             else{    // Constante
                sscanf(auxline,"%s %s",nom,equ);
@@ -82,7 +85,10 @@ if(valid_line(auxline) && !is_garbage(auxline)){
                 if(strcmp(equ,"EQU")==0){
                     getstr(auxline,valor);
                     sumalinea=0;
+                    if(search_const(LC,nom)==0)
                     add_const(LC,strupr(nom),valor);
+                    else
+                        *error=1;
                 }
             }
         }
