@@ -281,7 +281,7 @@ L=L->sig;
 return 0x00000FFF;
 }
 void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC L_const,int *lineaString,int *primera){
-char aux[10],offset[10],clean_offset[10];
+char aux[10],offset[10],clean_offset[10],aux2[10];
 clean_arg(ARG,aux);
 offset[0]='\0';
 //si offset es alfa hay que buscar en la lista de ctes
@@ -289,7 +289,8 @@ if(strchr(aux,'+'))
     strcpy(offset,strchr(aux,'+'));
 if(strchr(aux,'-'))
     strcpy(offset,strchr(aux,'-'));
-strcpy(aux,strtok(aux,"+-"));
+strcpy(aux2,strtok(aux,"+-"));
+strupr(aux2);
 if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-' || is_cte(ARG,L_const)){//OPERANDO INMEDIATO
     *tipo=0;
     switch (ARG[0]){//Lo pasamos a binario
@@ -338,8 +339,8 @@ else{
             }
     }
         else{//OPERANDO INDIRECTO
-            if (ARG[0]=='['&& is_register(aux,v_registers)){
 
+            if (ARG[0]=='['&& is_register(aux2,v_registers)){
                 *salida=0;
                 if(offset[0]!='\0')
                     if(offset[1]>='0' &&offset[1]<='9')
@@ -354,9 +355,9 @@ else{
                             *salida = find_const(clean_offset,L_const,lineaString,primera)<<4;
                     }
 
-                if (is_register(strupr(aux),v_registers)){
+                if (is_register(strupr(aux2),v_registers)){
                     *tipo=3;
-                    *salida|=find_register(aux,v_registers);
+                    *salida|=find_register(aux2,v_registers);
                 }
             }
             else{

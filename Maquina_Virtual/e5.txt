@@ -1,0 +1,63 @@
+MOV DX, 0
+MOV CX, 50
+MOV AX, %000
+SYS %3
+sys 15
+mov bx,0
+mov ax,0
+mov cx, 0
+mov fx, 0
+mov bx, -1
+call separa
+mov bx,dx
+mov ax,0
+call convert
+mov [0],ax
+mov bx,fx
+mov ax,0
+call convert
+mov [1],ax
+cmp '/',[ex-1] ;un case rupestre
+jz divs
+cmp '+',[ex]
+jz sum
+cmp '-',[ex]
+jz res
+cmp '*',[ex]
+jz mult
+jmp fin
+
+divs: div [0], [1]
+jmp fin
+sum: add [0],[1]
+jmp fin
+res: sub [0],[1]
+jmp fin
+mult: mul [0],[1]
+jmp fin
+
+separa: add bx,1
+cmp [bx] ,'/' ;12+1
+jp separa
+mov ex,[bx] ;guardo signo
+mov [bx], 0
+mov fx, [bx+1] ;guardo principio de 2do string
+jmp retorno
+
+convert: slen cx, [bx]
+repito: cmp [bx+1],0
+jz retorno
+and [bx], 15
+add ax,[bx]
+add bx,1
+sub cx,1
+mul ax,10
+jmp repito
+
+retorno: ret
+
+fin: mov dx,[0]
+mov cx, 1
+mov ax,%001
+sys 2
+stop
