@@ -1,4 +1,5 @@
 null EQU -1
+null equ 2
 GENLISTA: push BP
 mov BP, SP
 push [BP+4]
