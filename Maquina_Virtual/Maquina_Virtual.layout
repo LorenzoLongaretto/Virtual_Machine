@@ -7,19 +7,19 @@
 			<Cursor1 position="156" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="284" topLine="15" />
-		</Cursor>
-	</File>
 	<File name="prueba.txt" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="23" topLine="0" />
+			<Cursor1 position="11" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="traductor.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="4863" topLine="191" />
+		</Cursor>
+	</File>
+	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8464" topLine="194" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
