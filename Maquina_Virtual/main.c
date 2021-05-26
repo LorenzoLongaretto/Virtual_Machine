@@ -41,9 +41,9 @@ if(!is_garbage(auxline)){
     if( strcmp(auxcte,"EQU")!=0 && strcmp(mnem,"\\\\ASM")!=0 && valid_line(auxline) ){
         if (firstword[0]=='\0')
             if(comentario[0]=='\0')
-                printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline);
+                printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s\n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,i+1,auxline);
             else
-                printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s \t%s",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,lineaActual+1,auxline,comentario);
+                printf("[%04d]: %02X %02X %02X %02X\t%d:\t%s \t%s",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,i+1,auxline,comentario);
         else
             if(comentario[0]=='\0')
                             printf("[%04d]: %02X %02X %02X %02X\t%s\t%s \n",i,(memoria[lineaActual]& 0xFF000000)>>24,(memoria[lineaActual]& 0x00FF0000)>>16,(memoria[lineaActual]& 0x0000FF00)>>8,memoria[lineaActual]& 0x000000FF,firstword,auxline);
