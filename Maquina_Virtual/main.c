@@ -125,12 +125,12 @@ if(arch!=NULL){// Rotulos y Constantes
  while (fgets(auxline,100,arch)!=NULL)
     primera_pasada(auxline,&L,&LC,sizes,&lineaActual,&error);
 sizes[CS] = lineaActual;
-cargamem(memoria,sizes);
+cargamem(memoria,sizes);/*
 printf("%X\n",memoria[0]);
 printf("%d\n",memoria[1]);
 printf("%d\n",memoria[2]);
 printf("%d\n",memoria[3]);
-printf("%d\n",memoria[4]);
+printf("%d\n",memoria[4]);*/
 
 lineaString = lineaActual;
 // Cargar en memoria los 5 bloques del header
