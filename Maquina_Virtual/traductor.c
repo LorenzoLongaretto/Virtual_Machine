@@ -102,7 +102,7 @@ switch(token[0]){
 
 token = strtok(NULL," ");
 }
-if(vec[DS]>65535 || vec[ES] >65535 || vec[SS]>65535){
+if(vec[DS]>65535 || vec[ES] >65535 || vec[SS]>65535 ||vec[DS]<0 || vec[ES] <0 || vec[SS]<0){
     printf("Valores no apropiados en directivas\n");
     *error=1;
 }
