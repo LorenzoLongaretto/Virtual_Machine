@@ -28,9 +28,9 @@ if(strcmp(flag,aux[i])==0)
 return 0;
 }
 
-void muestraL(TLista L){
+void muestraL(TListaC L){
 while(L!=NULL){
-printf("%s %d\n",L->label,L->line);
+printf("%s %s\n",L->name,L->value);
 L=L->sig;
 }
 
@@ -80,10 +80,10 @@ sscanf(auxline,"%s",firstword);
                 *error=1;
         }
         else{    // Constante
-           sscanf(auxline,"%s %s",nom,equ);
+           sscanf(auxline,"%s %s %s",nom,equ,valor);
             strupr(equ);
             if(strcmp(equ,"EQU")==0){
-                getstr(auxline,valor);
+             //   getstr(auxline,valor);
                 sumalinea=0;
                 strupr(nom);
                 if(search_const(*LC,nom)==0)
@@ -115,16 +115,17 @@ FILE *arch;
 TLista L=NULL;
 TListaC LC=NULL;
 int lineaActual=0,error=0,tipo1,tipo2,warningcont=0,lineaString,cte=0,primera=0,header=0;
-char *filename=argv[1],auxline[100], finalLine[100],firstword[100],label[10],mnem[10],first_arg[10],second_arg[10],nom[10],equ[10],valor[10],auxcte[10];//finalLine es la linea sin rotulo ni comentarios
+char *filename=argv[1],auxline[300], finalLine[100],firstword[100],label[10],mnem[10],first_arg[20],second_arg[20],nom[10],equ[10],valor[10],auxcte[10];//finalLine es la linea sin rotulo ni comentarios
 int32_t salida1,salida2;
 int32_t sizes[]={1297494577,1024,1024,1024,1024,0};
 char comentario[100];
 arch=fopen(filename,"rt");
 if(arch!=NULL){// Rotulos y Constantes
 
- while (fgets(auxline,100,arch)!=NULL)
+ while (fgets(auxline,200,arch)!=NULL)
     primera_pasada(auxline,&L,&LC,sizes,&lineaActual,&error);
 sizes[CS] = lineaActual;
+//muestraL(LC);
 cargamem(memoria,sizes);/*
 printf("%X\n",memoria[0]);
 printf("%d\n",memoria[1]);
@@ -222,7 +223,10 @@ int main(int argc, char *argv[])
 int32_t memoria[8192];
 int o=0;
 char v_mnemonics[4082][5], v_registers[16][3];
-o=seekFlag("-o",argv,argc);
+o=seekFlag("-o",argv,argc);/*
+argc=3;
+argv[1]="A.asm";
+argv[2]="A.bin";*/
 if(argc>2){
     create_mnemonics(v_mnemonics);
     create_registers(v_registers);

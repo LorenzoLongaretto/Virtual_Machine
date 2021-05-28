@@ -351,14 +351,17 @@ else{
                         strupr(clean_offset);
                         if(offset[0]=='-')
                             *salida = (-1*find_const(clean_offset,L_const,lineaString,primera))<<4;
-                        else
-                            *salida = find_const(clean_offset,L_const,lineaString,primera)<<4;
+                        else{
+                            *salida = find_const(clean_offset,L_const,lineaString,primera);
+                            *salida<<=4;
+                        }
                     }
 
-                if (is_register(strupr(aux2),v_registers)){
+             //   if (is_register(strupr(aux2),v_registers)){
                     *tipo=3;
                     *salida|=find_register(aux2,v_registers);
-                }
+                    *tipo=3;
+            //    }
             }
             else{
              if (is_register(strupr(aux),v_registers)){//OPERANDO REGISTRO
@@ -397,7 +400,7 @@ aux[j-1]='\0';
 
 int find_const(char ARG[],TListaC L,int *lineaString,int *primera){
 int salida;
-char aux[10];
+char aux[100];
 while(L!=NULL && strcmp(ARG,(L)->name)!=0){
 L=(L)->sig;
 }
@@ -442,7 +445,7 @@ L=(L)->sig;
 return salida;
 }
 void load_cte_string(TListaC L,int memoria[],int *N){
-char aux[10];
+char aux[100];
 int i;
 while(L!=NULL){
 if(L->value[0]=='"'){
