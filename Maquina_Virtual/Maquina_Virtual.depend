@@ -111,9 +111,9 @@
 	"traductor.h"
 	<ctype.h>
 
-1621907977 c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.h
+1622384682 c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\traductor.h
 
-1621908282 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\main.c
+1622384682 source:c:\users\lisandro dalu\documents\github\virtual_machine\maquina_virtual\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

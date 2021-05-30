@@ -294,7 +294,7 @@ if(strchr(aux,'-'))
     strcpy(offset,strchr(aux,'-'));
 strcpy(aux2,strtok(aux,"+-"));
 strupr(aux2);
-if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-' || is_cte(aux2,L_const)){//OPERANDO INMEDIATO
+if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-' || (is_cte(aux2,L_const) && ARG[0]!='[')){//OPERANDO INMEDIATO
     *tipo=0;
     switch (ARG[0]){//Lo pasamos a binario
             case '\'': //ASCII
