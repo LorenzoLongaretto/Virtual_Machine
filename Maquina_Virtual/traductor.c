@@ -115,11 +115,12 @@ aux[0]='\0';
 while(string[i]!='"'){
     i++;
 }
-while(string[i]!='\0'){
+while(string[i]!='\0' && string[i]!='\n'){
     aux[j]=string[i];
     j++;i++;
 }
-
+aux[j]='\0';
+aux[j+1]='\0';
 }
 
 int is_garbage(char word[]){
@@ -391,14 +392,15 @@ else{
 }
 void clean_string(char string[100],char aux[100]){
 int i=0,j=0;
+aux[0]='\0';
 while(string[i]!='\0'){
-if(string[i]!='"'){
+if(string[i]!='"' && string[i]!='\n' ){
     aux[j]=string[i];
     j++;
 }
 i++;
 }
-aux[j-1]='\0';
+aux[j]='\0';
 }
 
 int32_t find_const(char ARG[],TListaC L,int *lineaString,int *primera){
