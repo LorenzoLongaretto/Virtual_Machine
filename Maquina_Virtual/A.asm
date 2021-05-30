@@ -1,6 +1,5 @@
-\\ASM DATA=4 EXTRA=10 STACK=70
 titulo equ  "--- TORRE DE HANOI ---"
-msg   equ  "Ingrese la cantidad de discos:"
+msg equ  "Ingrese la cantidad de discos"
 strA  equ "Torre A" 
 strB  equ "Torre B"
 strC  equ "Torre C"
@@ -56,14 +55,13 @@ destino equ 4
 aux equ 5
 hanoi:  push    bp
         mov     bp, sp
-        push    cx    
-	
-        mov     cx, [BP+2]
+        push    cx      
+        
+        mov     cx, [BP+discos]
         cmp     cx, 0   ;si la cantidad a mover es 0...
         jz      finh    ;...no hace nada 
         sub     cx, 1
-        
-push [BP+destino]
+push [bp+destino]
         push    [BP+aux] ;auxiliar es el nuevo destino
         push    [BP+origen] ;el origen se mantiene 
         push    cx
@@ -88,7 +86,7 @@ finh:   pop     cx
         pop     bp
         ret
 
-desde  equ  2
+destinode  equ  2
 hasta  equ  3 
 flecha equ " -> "
 paso equ "PASO "
@@ -109,7 +107,7 @@ print:  push    bp
         mov     cx, 1
         mov     ax, %901
         sys     %2
-        mov     dx, [bp+desde]
+        mov     dx, [bp+destinode]
         add     dx, str
         mov     dx, [dx]
         mov     ax, %900

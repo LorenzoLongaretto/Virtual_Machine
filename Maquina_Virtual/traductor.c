@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #include "traductor.h"
 #include<ctype.h>
 
@@ -264,7 +265,7 @@ while(str[i]!='\0'){
 void clean_arg(char str[], char aux[]){
 int i=0,j=0;
 while(str[i]!='\0'){
-    if(str[i]!='[' && str[i]!=']' && str[i]!='%' && str[i]!='@' && str[i]!='#' &&  str[i]!='"'){
+    if(str[i]!='[' && str[i]!=']' && str[i]!='%' && str[i]!='@' && str[i]!='#' &&  str[i]!='"' &&str[i]!='\n'){
         aux[j]=str[i];
         aux[j+1]='\0';
         j++;
@@ -281,8 +282,9 @@ L=L->sig;
 }
 return 0x00000FFF;
 }
-void opereitor1(char ARG[], int *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC L_const,int *lineaString,int *primera){
-char aux[10],offset[10],clean_offset[10],aux2[10];
+void opereitor1(char ARG[], int32_t *salida, TLista L_label, int *tipo, int *error, char v_registers[],TListaC L_const,int *lineaString,int *primera){
+char aux[20],offset[20],clean_offset[20],aux2[20];
+int32_t a;
 clean_arg(ARG,aux);
 offset[0]='\0';
 //si offset es alfa hay que buscar en la lista de ctes
@@ -360,8 +362,8 @@ else{
 
              //   if (is_register(strupr(aux2),v_registers)){
                     *tipo=3;
-                    *salida|=find_register(aux2,v_registers);
-                    *tipo=3;
+                    a=find_register(aux2,v_registers);
+                    *salida|=a;
             //    }
             }
             else{
@@ -399,7 +401,7 @@ i++;
 aux[j-1]='\0';
 }
 
-int find_const(char ARG[],TListaC L,int *lineaString,int *primera){
+int32_t find_const(char ARG[],TListaC L,int *lineaString,int *primera){
 int salida;
 char aux[100];
 while(L!=NULL && strcmp(ARG,(L)->name)!=0){

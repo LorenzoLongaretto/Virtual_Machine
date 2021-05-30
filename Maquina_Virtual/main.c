@@ -126,7 +126,7 @@ if(arch!=NULL){// Rotulos y Constantes
  while (fgets(auxline,200,arch)!=NULL)
     primera_pasada(auxline,&L,&LC,sizes,&lineaActual,&error);
 sizes[CS] = lineaActual;
-//muestraL(LC);
+muestraL(LC);
 cargamem(memoria,sizes);/*
 printf("%X\n",memoria[0]);
 printf("%d\n",memoria[1]);
@@ -178,7 +178,7 @@ while(fgets(auxline,100,arch)!=NULL){
                     memoria[lineaActual]= find_nmemonic(mnem,v_mnemonics)<<24;// los de 1 operando usan 8
                     opereitor1(first_arg,&salida1,L, &tipo1,&error,v_registers,LC,&lineaString,&primera);
                     if(salida1>0x0000FFFF) //WARNING
-                    warningcont+=1;
+                        warningcont+=1;
                     memoria[lineaActual]|= (tipo1 <<22 & 0x00C00000); //tipo operando
                     memoria[lineaActual]|=(salida1 & 0x0000FFFF) ;
                 }
@@ -224,10 +224,10 @@ int main(int argc, char *argv[])
 int32_t memoria[8192];
 int o=0;
 char v_mnemonics[4082][5], v_registers[16][3];
-o=seekFlag("-o",argv,argc);/*
+o=seekFlag("-o",argv,argc);
 argc=3;
-argv[1]="e7.txt";
-argv[2]="e7.bin";*/
+argv[1]="A.asm";
+argv[2]="A.bin";
 if(argc>2){
     create_mnemonics(v_mnemonics);
     create_registers(v_registers);

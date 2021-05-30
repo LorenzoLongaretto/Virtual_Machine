@@ -6,7 +6,7 @@ typedef struct nodo{
 typedef nodo* TLista;
 
 typedef struct nodoC{
-    char name[10];
+    char name[20];
     char value[100];
     int used;
      struct nodoC *sig;

@@ -7,14 +7,15 @@
 
 1618269863 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\1.h
 
-1622340372 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.c
+1622345961 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<stdint.h>
 	"traductor.h"
 	<ctype.h>
 
-1622340334 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\main.c
+1622343970 source:c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -80,7 +81,7 @@
 
 1621800358 c:\users\robert\documents\github\virtual_machine\maquina_virtual\traductor.h
 
-1622060831 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.h
+1622344698 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\traductor.h
 
 1618333637 c:\users\loren\desktop\facu\arquitectura\virtual_machine\maquina_virtual\instrucciones.h
 
