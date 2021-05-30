@@ -110,16 +110,17 @@ if(vec[DS]>65535 || vec[ES] >65535 || vec[SS]>65535 ||vec[DS]<0 || vec[ES] <0 ||
 }
 void getstr(char string[],char aux[] ){
 int i=0,j=0;
+aux[0]='\0';
 while(string[i]!='"'){
     i++;
 }
-
 while(string[i]!='\0'){
     aux[j]=string[i];
     j++;i++;
 }
 
 }
+
 int is_garbage(char word[]){
 int i=0,large, bandera=1;
 large = sizeof(word);
@@ -263,7 +264,7 @@ while(str[i]!='\0'){
 void clean_arg(char str[], char aux[]){
 int i=0,j=0;
 while(str[i]!='\0'){
-    if(str[i]!='[' && str[i]!=']' && str[i]!='%' && str[i]!='@' && str[i]!='#'){
+    if(str[i]!='[' && str[i]!=']' && str[i]!='%' && str[i]!='@' && str[i]!='#' &&  str[i]!='"'){
         aux[j]=str[i];
         aux[j+1]='\0';
         j++;
@@ -291,7 +292,7 @@ if(strchr(aux,'-'))
     strcpy(offset,strchr(aux,'-'));
 strcpy(aux2,strtok(aux,"+-"));
 strupr(aux2);
-if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-' || is_cte(ARG,L_const)){//OPERANDO INMEDIATO
+if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]=='\''|| ARG[0] == '-' || is_cte(aux2,L_const)){//OPERANDO INMEDIATO
     *tipo=0;
     switch (ARG[0]){//Lo pasamos a binario
             case '\'': //ASCII
@@ -309,7 +310,7 @@ if (ARG[0] == '#' || isdigit(ARG[0]) || ARG[0] == '@' || ARG[0] == '%' || ARG[0]
             default://decimal
                 {
                 if(isalpha(ARG[0])){
-                    *salida = find_const(strupr(ARG),L_const,lineaString,primera);
+                    *salida = find_const(aux2,L_const,lineaString,primera); //aux2 tiene el arg con strupr
                 }
                 else // es decimal
                    *salida=strtoul(aux,NULL,10);
@@ -413,15 +414,16 @@ L=(L)->sig;
                              if((L)->used > 0)
                                 salida = (L)->used;
                             else{
-                                *lineaString+=strlen(aux)+1;
                                 salida=*lineaString;
                                 (L)->used=*lineaString;
+                                *lineaString+=strlen(aux)+1;
                          }
                     }
                     else{
                         salida =*lineaString;
                         (L)->used=*lineaString;
                         *primera=1;
+                        *lineaString+=strlen(aux)+1;
                     }
                     break;
                      case '\'': //ASCII
@@ -452,17 +454,15 @@ if(L->value[0]=='"'){
         if(L->used!=0){
             clean_string(L->value,aux);
         for(i=0;i<=strlen(aux);i++){
-        memoria[L->used+i+5]=aux[i];
-       // printf("%c \n",memoria[L->used+i]);
-       memoria[CS]+=1;
-       ++(*N);
+            memoria[L->used+i+5]=aux[i];
+            memoria[CS]+=1;
+            ++(*N);
         }
-
     }
 }
 L=L->sig;
 }
-
+memoria[CS]+=1; //1 mas anda a saber xq pero funca mejor
 }
 
 

@@ -61,7 +61,7 @@ if(!is_garbage(auxline)){
 
 
 void primera_pasada(char auxline[100],TLista *L,TListaC *LC,int sizes[],int *lineaActual,int *error){
-char firstword[10],nom[10],equ[10],valor[10];
+char firstword[10],nom[10],equ[10],valor[100];
 int sumalinea=1;
 if(valid_line(auxline) && !is_garbage(auxline)){
 sscanf(auxline,"%s",firstword);
@@ -83,7 +83,8 @@ sscanf(auxline,"%s",firstword);
            sscanf(auxline,"%s %s %s",nom,equ,valor);
             strupr(equ);
             if(strcmp(equ,"EQU")==0){
-             //   getstr(auxline,valor);
+                if(valor[0]=='"')
+                   getstr(auxline,valor);
                 sumalinea=0;
                 strupr(nom);
                 if(search_const(*LC,nom)==0)
@@ -225,8 +226,8 @@ int o=0;
 char v_mnemonics[4082][5], v_registers[16][3];
 o=seekFlag("-o",argv,argc);/*
 argc=3;
-argv[1]="A.asm";
-argv[2]="A.bin";*/
+argv[1]="e7.txt";
+argv[2]="e7.bin";*/
 if(argc>2){
     create_mnemonics(v_mnemonics);
     create_registers(v_registers);

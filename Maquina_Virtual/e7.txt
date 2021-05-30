@@ -1,10 +1,10 @@
-m1 equ "es"
-m2 equ "no es"
+m1 equ "es palindroma"
+m2 equ "no es palindroma"
+m3 equ 3
 MOV DX, 0
 MOV CX, 50
 MOV AX, %000
 SYS %3
-
 mov ax,[0]
 mov bx , 0
 push ax
@@ -15,7 +15,7 @@ call palind
 ldh 3
 ldl m1
 mov dx,ac ;es pal
-mov ax,%100
+mov ax,%900
 sys 4
 stop
 
@@ -44,9 +44,9 @@ pop bp
 ret
 
 fin2: ldh 3
+sys 15
 ldl m2
 mov dx,ac
-mov cx, 5
-mov ax,%100
+mov ax,%900
 sys 4
 stop
